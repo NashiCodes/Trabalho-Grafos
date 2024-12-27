@@ -49,11 +49,35 @@ cmake_ninja_workdir = C$:/codigos/grafos/trabalho/cmake-build-debug/
 
 build cmake_object_order_depends_target_trabalho: phony || .
 
-build CMakeFiles/trabalho.dir/library.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/library.cpp || cmake_object_order_depends_target_trabalho
-  DEP_FILE = CMakeFiles\trabalho.dir\library.cpp.obj.d
+build CMakeFiles/trabalho.dir/main.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/main.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\main.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\trabalho.dir
   OBJECT_FILE_DIR = CMakeFiles\trabalho.dir
+
+build CMakeFiles/trabalho.dir/src/structures/Node.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/Node.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\Node.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\trabalho.dir
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures
+
+build CMakeFiles/trabalho.dir/src/structures/Edge.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/Edge.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\Edge.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\trabalho.dir
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures
+
+build CMakeFiles/trabalho.dir/src/structures/storage/ListStorage.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/storage/ListStorage.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\storage\ListStorage.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\trabalho.dir
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\storage
+
+build CMakeFiles/trabalho.dir/src/structures/storage/Matrix.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/storage/Matrix.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\storage\Matrix.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\trabalho.dir
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\storage
 
 
 # =============================================================================
@@ -63,7 +87,7 @@ build CMakeFiles/trabalho.dir/library.cpp.obj: CXX_COMPILER__trabalho_unscanned_
 #############################################
 # Link the static library libtrabalho.a
 
-build libtrabalho.a: CXX_STATIC_LIBRARY_LINKER__trabalho_Debug CMakeFiles/trabalho.dir/library.cpp.obj
+build libtrabalho.a: CXX_STATIC_LIBRARY_LINKER__trabalho_Debug CMakeFiles/trabalho.dir/main.cpp.obj CMakeFiles/trabalho.dir/src/structures/Node.cpp.obj CMakeFiles/trabalho.dir/src/structures/Edge.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/ListStorage.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/Matrix.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\trabalho.dir
   POST_BUILD = cd .
