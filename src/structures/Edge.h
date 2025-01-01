@@ -1,7 +1,3 @@
-//
-// Created by Nashi on 27/12/2024.
-//
-
 #ifndef EDGE_H
 #define EDGE_H
 #include "Node.h"

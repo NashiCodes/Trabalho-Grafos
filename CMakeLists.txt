@@ -14,4 +14,6 @@ add_library(trabalho STATIC main.cpp
         src/structures/storage/List/ListNode.h
         src/structures/storage/Matrices/Matrix.cpp
         src/structures/storage/Matrices/Matrix.h
+        src/structures/Grafo.cpp
+        src/structures/Grafo.h
 )

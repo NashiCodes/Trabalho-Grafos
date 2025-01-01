@@ -1,14 +1,10 @@
-//
-// Created by Nashi on 27/12/2024.
-//
-
 #ifndef LISTSTORAGE_H
 #define LISTSTORAGE_H
 
 #include <iostream>
 
 #include "ListNode.h"
-#include "Storage.h"
+#include "../Storage.h"
 
 using namespace std;
 

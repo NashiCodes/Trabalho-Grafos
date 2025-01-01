@@ -1,7 +1,3 @@
-//
-// Created by Nashi on 27/12/2024.
-//
-
 #include "Node.h"
 
 using namespace std;
