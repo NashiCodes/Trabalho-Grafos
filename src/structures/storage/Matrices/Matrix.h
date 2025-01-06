@@ -16,10 +16,13 @@ private:
     int line;
     int column;
     T **matrix;
-    bool verify(int line, int column);
+    bool verify(int i, int j);
 
 public:
-
+    Matrix(int nl, int nc);
+    ~Matrix();
+    void set(int i, int j, T info);
+    T get(int i, int j);
 };
 
 
