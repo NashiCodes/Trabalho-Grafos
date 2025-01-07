@@ -3,5 +3,3 @@
 //
 
 #include "Grafo_lista.h"
-
-Grafo_lista::~Grafo_lista() = default;

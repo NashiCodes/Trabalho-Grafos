@@ -2,6 +2,7 @@
 #ifndef MATRIXLIN_H
 #define MATRIXLIN_H
 #include "../Storage.h"
+#include "../../graph/basics/Edge.h"
 
 /**
  * @brief Classe para armazenamento de dados em forma de matriz
@@ -10,11 +11,11 @@
  * usar o mesmo conceito de modelo para as duas classes
  * @tparam T Tipo de dado a ser armazenado, como arestas ou vertices
  */
-template<class T>
-class MatrixLin final : public Storage<T> {
+
+class MatrixLin final : public Storage<Edge *> {
     int line;
     int column;
-    T *matrix;
+    Edge **matrix;
     [[nodiscard]] bool verify(int i, int j) const;
     [[nodiscard]] int toLinearIndex(int i, int j) const;
 
@@ -22,14 +23,14 @@ public:
     MatrixLin(int nl, int nc);
     ~MatrixLin() override;
 
-    void set(int i, int j, T info);
-    T get(int i, int j);  
+    void set(int i, int j, Edge* info);
+    Edge* get(int i, int j) override;
 
     [[nodiscard]] int getSize() const { return line * column; }
 
-    void add(T *info) override;
+    void add(Edge *info) override;
 };
 
 
 
-#endif //MATRIX_H
+#endif //MATRIXLIN_H

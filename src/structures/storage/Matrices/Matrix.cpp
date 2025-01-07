@@ -3,53 +3,51 @@
 //
 #include <iostream>
 #include "Matrix.h"
-#include "../../graph/basics/Edge.cpp"
 
 using namespace std;
 
-template<typename T>
-Matrix<T>::Matrix(const int nl, const int nc) {
-    line = nl;
-    column = nc;
 
-    matrix = new T[line];
-    for (int i = 0; i < line; i++) {
-        matrix[i] = new T[column];
+Matrix::Matrix(const int nl, const int nc) {
+    this->line = nl;
+    this->column = nc;
+
+    this->matrix = new Edge*[this->line];
+    for (int i = 0; i < this->line; i++) {
+        this->matrix[i] = new Edge[this->column];
     }
 }
 
-template<typename T>
-Matrix<T>::~Matrix() {
+
+Matrix::~Matrix() {
     for (int i = 0; i < line; i++) {
         delete[] matrix[i];
     }
     delete[] matrix;
 }
 
-template<typename T>
-bool Matrix<T>::verify(const int i, const int j) const {
+
+bool Matrix::verify(const int i, const int j) const {
     return i >= 0 && i < line && j >= 0 && j < column;
 }
 
-template<typename T>
-T Matrix<T>::get(int i, int j) {
+
+Edge* Matrix::get(const int i, const int j) {
     if (!verify(i, j)) {
         cout << "Index out of bounds" << endl;
-        return -1;
+        return nullptr;
     }
-    return matrix[i][j];
+    return &matrix[i][j];
 }
 
-template<class T>
-void Matrix<T>::add(T *info) {
-    auto edge = static_cast<Edge *>(info);
+void Matrix::add(Edge* info) {
+    const auto edge = info;
     const int i = edge->getOrigem()->getId();
     const int j = edge->getDestino()->getId();
     this->set(i, j, *info);
 }
 
-template<typename T>
-void Matrix<T>::set(int i, int j, T info) {
+
+void Matrix::set(const int i, const int j, const Edge &info) const {
     if (!verify(i, j)) {
         cout << "Index out of bounds" << endl;
         return;

@@ -17,7 +17,7 @@ ListStorage<T>::~ListStorage() {
 }
 
 template<class T>
-void ListStorage<T>::add(T *info) {
+void ListStorage<T>::add(T info) {
     auto *node = new ListNode<T>(info);
     node->setNext(nullptr);
     node->setPrev(nullptr);
@@ -35,7 +35,7 @@ void ListStorage<T>::add(T *info) {
 }
 
 template<class T>
-T* ListStorage<T>::get(int ID) {
+T ListStorage<T>::get(int ID) {
     auto current = this->head;
     while (current != nullptr) {
         if (current->getNode()->getId() == ID) {

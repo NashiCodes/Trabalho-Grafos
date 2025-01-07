@@ -1,8 +1,8 @@
 #ifndef GRAFO_H
 #define GRAFO_H
-#include "../storage/List/ListStorage.cpp"
-#include "basics/Edge.cpp"
-#include "basics/Node.cpp"
+#include "../storage/Storage.h"
+#include "basics/Edge.h"
+#include "basics/Node.h"
 
 
 class Grafo {
@@ -46,9 +46,9 @@ public:
         return false;
     };
 
-    static auto carregar_grafo(ifstream *entrada, ofstream *saida, const char tipo);
+    void carregar_grafo(ifstream *entrada, ofstream *saida);
 
-    static auto novo_grafo(const char tipo);
+    void novo_grafo(char tipo);
 
     void set_aresta_ponderada(const bool aresta_ponderada) {
         ArestaPonderada = aresta_ponderada;
@@ -70,8 +70,8 @@ protected:
     bool Direcionado;
     ifstream *Input;
     ofstream *Output;
-    Storage<Node> *NOS{};
-    Storage<Edge> *ARESTAS{};
+    Storage<Node *> *NOS{};
+    Storage<Edge *> *ARESTAS{};
 };
 
 

@@ -1,12 +1,12 @@
-//
-// Created by Nashi on 06/01/2025.
-//
 
 #include "Grafo_matriz.h"
+#include "../storage/Matrices/Matrix.cpp"
+#include "../storage/Matrices/MatrixLin.cpp"
+#include "../storage/List/ListStorage.cpp"
 
-Grafo_matriz::~Grafo_matriz() {
-    delete this->NOS;
-    delete this->ARESTAS;
+
+Grafo_matriz::Grafo_matriz() {
+    this->NOS = new ListStorage<Node *>();
 }
 
 bool Grafo_matriz::eh_bipartido() {
@@ -37,8 +37,8 @@ void Grafo_matriz::set_direcionado(const bool direcionado) {
     this->Direcionado = direcionado;
 
     if (direcionado) {
-        this->ARESTAS = new Matrix<Edge>(this->Ordem, this->Ordem);
+        this->ARESTAS = new Matrix(this->Ordem, this->Ordem);
     } else {
-        // Representação linear de matriz triangular
+        this->ARESTAS = new MatrixLin(this->Ordem, this->Ordem);
     }
 }

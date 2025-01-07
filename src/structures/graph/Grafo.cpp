@@ -1,15 +1,11 @@
-#include "Grafo.h"
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "Grafo.h"
 
-#include "Grafo_lista.cpp"
-#include "Grafo_matriz.cpp"
+using namespace std;
 
-auto Grafo::carregar_grafo(ifstream *entrada, ofstream *saida, const char tipo) {
-    auto *grafo = (tipo == 'm') ? static_cast<Grafo *>(new Grafo_matriz()) : static_cast<Grafo *>(new Grafo_lista());
-
+void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {
     string line;
     getline(*entrada, line);
 
@@ -17,20 +13,20 @@ auto Grafo::carregar_grafo(ifstream *entrada, ofstream *saida, const char tipo) 
 
     int direcionado, vPonderado, aPonderada;
 
-    iss >> grafo->Ordem >> direcionado >> vPonderado >> aPonderada;
+    iss >> this->Ordem >> direcionado >> vPonderado >> aPonderada;
 
-    grafo->set_direcionado(direcionado);
-    grafo->set_vertice_ponderado(vPonderado);
-    grafo->set_aresta_ponderada(aPonderada);
+    this->set_direcionado(direcionado);
+    this->set_vertice_ponderado(vPonderado);
+    this->set_aresta_ponderada(aPonderada);
 
     if (vPonderado) {
         getline(*entrada, line);
         iss = istringstream(line);
 
-        for (int i = 0; i < grafo->Ordem; i++) {
+        for (int i = 0; i < this->Ordem; i++) {
             int peso;
             iss >> peso;
-            grafo->NOS->add(new Node(i + 1, peso));
+            this->NOS->add(new Node(i + 1, peso));
         }
     }
 
@@ -40,21 +36,16 @@ auto Grafo::carregar_grafo(ifstream *entrada, ofstream *saida, const char tipo) 
         int origem, destino, peso;
         iss >> origem >> destino >> peso;
 
-        if (grafo->NOS->get(origem) == nullptr) {
-            grafo->NOS->add(new Node(origem, 0));
-        }if (grafo->NOS->get(destino) == nullptr) {
-            grafo->NOS->add(new Node(destino, 0));
+        if (this->NOS->get(origem) == nullptr) {
+            this->NOS->add(new Node(origem, 0));
+        }if (this->NOS->get(destino) == nullptr) {
+            this->NOS->add(new Node(destino, 0));
         }
 
-        auto *noOrigem = grafo->NOS->get(origem);
-        auto *noDestino = grafo->NOS->get(destino);
+        auto *noOrigem = this->NOS->get(origem);
+        auto *noDestino = this->NOS->get(destino);
 
-        grafo->ARESTAS->add(new Edge(grafo->ARESTAS->getSize() + 1, peso, noOrigem, noDestino));
+        this->ARESTAS->add(new Edge(this->ARESTAS->getSize() + 1, peso, noOrigem, noDestino));
     }
 
-
-    return grafo;
-}
-
-auto Grafo::novo_grafo(const char tipo) {
 }

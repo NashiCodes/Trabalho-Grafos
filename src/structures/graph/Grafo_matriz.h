@@ -1,20 +1,12 @@
-//
-// Created by Nashi on 06/01/2025.
-//
-
 #ifndef GRAFO_MATRIZ_H
 #define GRAFO_MATRIZ_H
-#include "Grafo.h"
-#include "../storage/Matrices/Matrix.cpp"
-
+#include "Grafo.cpp"
 
 class Grafo_matriz final : public Grafo {
 public:
-    Grafo_matriz() {
-        this->NOS = new ListStorage<Node>();
-    }
+    Grafo_matriz();
 
-    ~Grafo_matriz() override;
+    ~Grafo_matriz() override = default;
 
     bool eh_bipartido() override;
 

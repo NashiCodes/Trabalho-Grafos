@@ -4,9 +4,7 @@ project(trabalho)
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(trabalho STATIC main.cpp
-        src/structures/graph/basics/Node.cpp
         src/structures/graph/basics/Node.h
-        src/structures/graph/basics/Edge.cpp
         src/structures/graph/basics/Edge.h
         src/structures/storage/Storage.h
         src/structures/storage/List/ListStorage.cpp
@@ -19,4 +17,5 @@ add_library(trabalho STATIC main.cpp
         src/structures/graph/Grafo_lista.h
         src/structures/graph/Grafo_matriz.cpp
         src/structures/graph/Grafo_matriz.h
+        src/structures/graph/Grafo.cpp
 )

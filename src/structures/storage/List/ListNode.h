@@ -3,18 +3,18 @@
 
 template<class T>
 class ListNode {
-    T *info;
+    T info;
     ListNode *next;
     ListNode *prev;
 
 public:
-    explicit ListNode(T *info) {
+    explicit ListNode(T info) {
         this->info = info;
         this->next = nullptr;
         this->prev = nullptr;
     }
 
-    [[nodiscard]] T *getNode() const { return this->info; }
+    [[nodiscard]] T getNode() const { return this->info; }
     [[nodiscard]] ListNode *getNext() const { return this->next; }
     [[nodiscard]] ListNode *getPrev() const { return this->prev; }
     void setNext(ListNode *next) { this->next = next; }

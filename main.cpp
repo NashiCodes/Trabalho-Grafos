@@ -2,7 +2,8 @@
 #include <fstream>
 #include <unistd.h>
 #include <string>
-#include "src/structures/graph/Grafo.cpp"
+#include "src/structures/graph/Grafo_lista.h"
+#include "src/structures/graph/Grafo_matriz.cpp"
 
 using namespace std;
 
@@ -39,8 +40,10 @@ int main(const int argc, const char *argv[]) {
 
 
     if (argc == 4) {
-        const auto grafo = Grafo::carregar_grafo(&entrada, &saida, argv[2][1]);
-        grafo->eh_arvore();
+        const auto grafo = argv[2][1] == 'm' ? static_cast<Grafo *>(new Grafo_matriz()) : static_cast<Grafo *>(new
+        Grafo_lista());
+
+        grafo->carregar_grafo(&entrada, &saida);
     } else if (argc == 5) {
     } else {
         cout << "argumentos invalidos" << endl;
