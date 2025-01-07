@@ -12,8 +12,8 @@ class Storage {
 public:
     virtual ~Storage() = default;
 
-    virtual void add(T info){}
-    virtual T get(int ID) { return nullptr; }
+    virtual void add(T *info){}
+    virtual T* get(int ID) { return nullptr; }
 };
 
 

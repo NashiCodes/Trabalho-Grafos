@@ -1,42 +1,69 @@
 #ifndef GRAFO_H
 #define GRAFO_H
-#include "Node.h"
-#include "../storage/Storage.h"
+#include "../storage/List/ListStorage.cpp"
+#include "basics/Edge.h"
+#include "basics/Node.h"
 
 
-class Edge;
 
 class Grafo {
 public:
-    Grafo(Storage<Node> *NOS, Storage<Edge> *ARESTAS) : Grau(0), Direcionado(false), VerticePonderado(false),
+    Grafo() : Grau(0), Direcionado(false), VerticePonderado(false),
                                                         ArestaPonderada(false) {
-        this->NOS = NOS;
-        this->ARESTAS = ARESTAS;
+        this->NOS = new ListStorage<Node>();
+        this->ARESTAS = new ListStorage<Edge>();
     }
 
-    bool eh_bipartido();
+    virtual ~Grafo() {
+        delete this->NOS;
+        delete this->ARESTAS;
+    }
 
-    bool n_conexo();
+    virtual bool eh_bipartido() {
+        return false;
+    }
 
-    int get_grau();
+    virtual bool n_conexo() {
+        return false;
+    }
 
-    bool eh_direcionado();
+    virtual int get_grau() {
+        return Grau;
+    }
 
-    bool vertice_ponderado();
+    virtual bool eh_direcionado() {
+        return Direcionado;
+    }
 
-    bool aresta_ponderada();
+    virtual bool vertice_ponderado() {
+        return VerticePonderado;
+    }
 
-    bool eh_completo();
+    virtual bool aresta_ponderada() {
+        return ArestaPonderada;
+    }
 
-    bool eh_arvore();
+    virtual bool eh_completo() {
+        return false;
+    }
 
-    bool possui_articulacao();
+    virtual bool eh_arvore() {
+        return false;
+    }
 
-    bool possui_ponte();
+    virtual bool possui_articulacao() {
+        return false;
+    }
 
-    void carregar_grafo();
+    virtual bool possui_ponte() {
+        return false;
+    }
 
-    Grafo *novo_grafo();
+    static void carregar_grafo(){}
+
+    static Grafo *novo_grafo(const char tipo) {
+        return new Grafo();
+    }
 
 private:
     Storage<Node> *NOS{};
