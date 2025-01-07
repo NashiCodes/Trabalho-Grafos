@@ -11,7 +11,7 @@ using namespace std;
 template<class T>
 class ListStorage final : public Storage<T> {
 public:
-    ListStorage(ListNode<T> *head, ListNode<T> *tail, int size);
+    ListStorage();
 
     ~ListStorage() override;
 

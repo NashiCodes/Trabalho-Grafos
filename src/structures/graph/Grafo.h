@@ -1,7 +1,7 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 #include "Node.h"
-#include "storage/Storage.h"
+#include "../storage/Storage.h"
 
 
 class Edge;
@@ -39,8 +39,8 @@ public:
     Grafo *novo_grafo();
 
 private:
-    Storage<Node> *NOS;
-    Storage<Edge> *ARESTAS;
+    Storage<Node> *NOS{};
+    Storage<Edge> *ARESTAS{};
     int Grau;
     bool Direcionado;
     bool VerticePonderado;

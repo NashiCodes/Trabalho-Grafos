@@ -7,7 +7,7 @@
 using namespace std;
 
 template <typename T>
-Matrix<T>::Matrix(int nl, int nc) {
+Matrix<T>::Matrix(const int nl, const int nc) {
     line = nl;
     column = nc;
 
@@ -26,7 +26,7 @@ Matrix<T>::~Matrix() {
 }
 
 template <typename T>
-bool Matrix<T>::verify(int i, int j) {
+bool Matrix<T>::verify(const int i, const int j) const {
     return i >= 0 && i < line && j >= 0 && j < column;
 }
 

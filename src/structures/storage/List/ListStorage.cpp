@@ -1,7 +1,7 @@
 #include "ListStorage.h"
 
 template<class T>
-ListStorage<T>::ListStorage(ListNode<T> *head, ListNode<T> *tail, int size): head(nullptr), tail(nullptr), size(0) {
+ListStorage<T>::ListStorage(): head(nullptr), tail(nullptr), size(0) {
 }
 
 template<class T>

@@ -55,17 +55,17 @@ build CMakeFiles/trabalho.dir/main.cpp.obj: CXX_COMPILER__trabalho_unscanned_Deb
   OBJECT_DIR = CMakeFiles\trabalho.dir
   OBJECT_FILE_DIR = CMakeFiles\trabalho.dir
 
-build CMakeFiles/trabalho.dir/src/structures/Node.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/Node.cpp || cmake_object_order_depends_target_trabalho
-  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\Node.cpp.obj.d
+build CMakeFiles/trabalho.dir/src/structures/graph/Node.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/graph/Node.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\graph\Node.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\trabalho.dir
-  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\graph
 
-build CMakeFiles/trabalho.dir/src/structures/Edge.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/Edge.cpp || cmake_object_order_depends_target_trabalho
-  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\Edge.cpp.obj.d
+build CMakeFiles/trabalho.dir/src/structures/graph/Edge.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/graph/Edge.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\graph\Edge.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\trabalho.dir
-  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\graph
 
 build CMakeFiles/trabalho.dir/src/structures/storage/List/ListStorage.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/storage/List/ListStorage.cpp || cmake_object_order_depends_target_trabalho
   DEP_FILE = CMakeFiles\trabalho.dir\src\structures\storage\List\ListStorage.cpp.obj.d
@@ -79,11 +79,11 @@ build CMakeFiles/trabalho.dir/src/structures/storage/Matrices/Matrix.cpp.obj: CX
   OBJECT_DIR = CMakeFiles\trabalho.dir
   OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\storage\Matrices
 
-build CMakeFiles/trabalho.dir/src/structures/Grafo.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/Grafo.cpp || cmake_object_order_depends_target_trabalho
-  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\Grafo.cpp.obj.d
+build CMakeFiles/trabalho.dir/src/structures/graph/Grafo.cpp.obj: CXX_COMPILER__trabalho_unscanned_Debug C$:/codigos/grafos/trabalho/src/structures/graph/Grafo.cpp || cmake_object_order_depends_target_trabalho
+  DEP_FILE = CMakeFiles\trabalho.dir\src\structures\graph\Grafo.cpp.obj.d
   FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\trabalho.dir
-  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures
+  OBJECT_FILE_DIR = CMakeFiles\trabalho.dir\src\structures\graph
 
 
 # =============================================================================
@@ -93,7 +93,7 @@ build CMakeFiles/trabalho.dir/src/structures/Grafo.cpp.obj: CXX_COMPILER__trabal
 #############################################
 # Link the static library libtrabalho.a
 
-build libtrabalho.a: CXX_STATIC_LIBRARY_LINKER__trabalho_Debug CMakeFiles/trabalho.dir/main.cpp.obj CMakeFiles/trabalho.dir/src/structures/Node.cpp.obj CMakeFiles/trabalho.dir/src/structures/Edge.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/List/ListStorage.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/Matrices/Matrix.cpp.obj CMakeFiles/trabalho.dir/src/structures/Grafo.cpp.obj
+build libtrabalho.a: CXX_STATIC_LIBRARY_LINKER__trabalho_Debug CMakeFiles/trabalho.dir/main.cpp.obj CMakeFiles/trabalho.dir/src/structures/graph/Node.cpp.obj CMakeFiles/trabalho.dir/src/structures/graph/Edge.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/List/ListStorage.cpp.obj CMakeFiles/trabalho.dir/src/structures/storage/Matrices/Matrix.cpp.obj CMakeFiles/trabalho.dir/src/structures/graph/Grafo.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles\trabalho.dir
   POST_BUILD = cd .

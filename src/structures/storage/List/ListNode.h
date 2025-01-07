@@ -3,7 +3,6 @@
 
 template<class T>
 class ListNode {
-private:
     T *info;
     ListNode *next;
     ListNode *prev;

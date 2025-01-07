@@ -2,10 +2,6 @@
 #define NO_H
 
 #include <iostream>
-#include <cstdlib>
-#include <string>
-#include <map>
-#include <set>
 
 using namespace std;
 
