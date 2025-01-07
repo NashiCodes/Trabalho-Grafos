@@ -41,7 +41,7 @@ T Matrix<T>::get(int i, int j) {
 }
 
 template<class T>
-void Matrix<T>::add(T info) {
+void Matrix<T>::add(T *info) {
     auto edge = static_cast<Edge *>(info);
     const int i = edge->getOrigem()->getId();
     const int j = edge->getDestino()->getId();

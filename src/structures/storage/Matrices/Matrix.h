@@ -21,7 +21,7 @@ public:
     Matrix(int nl, int nc);
     ~Matrix() override;
     void set(int i, int j, T info);
-    T get(int i, int j);
+    T get(int i, int j);    
     [[nodiscard]] int getSize() const { return line * column; }
 
     void add(T *info) override;
