@@ -15,8 +15,8 @@ public:
 
     ~ListStorage() override;
 
-    void add(T info) override;
-    T get(int ID) override;
+    void add(T *info) override;
+    T *get(int ID) override;
 
 private:
     ListNode<T> *head;
