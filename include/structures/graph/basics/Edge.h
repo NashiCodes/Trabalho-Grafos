@@ -1,11 +1,12 @@
 #ifndef EDGE_H
 #define EDGE_H
-#include "Node.h"
 
+
+class Node;
 
 class Edge {
 public:
-    Edge() = default;
+
     Edge(const int ID, const int PESO, Node *Origem, Node *Destino){
         this->ID = ID;
         this->PESO = PESO;

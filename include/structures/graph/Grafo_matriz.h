@@ -1,16 +1,21 @@
 #ifndef GRAFO_MATRIZ_H
 #define GRAFO_MATRIZ_H
-#include "Grafo.cpp"
+
+#include "Grafo.h"
+#include "../../../src/structures/storage/Matrices/Matrix.cpp"
+
 
 class Grafo_matriz final : public Grafo {
+    Matrix *ARESTAS;
+
 public:
     Grafo_matriz();
 
-    ~Grafo_matriz() override = default;
+    ~Grafo_matriz() override;
 
     bool eh_bipartido() override;
 
-    bool n_conexo() override;
+    int n_conexo() override;
 
     bool eh_completo() override;
 

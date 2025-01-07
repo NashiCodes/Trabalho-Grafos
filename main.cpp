@@ -2,8 +2,9 @@
 #include <fstream>
 #include <unistd.h>
 #include <string>
-#include "src/structures/graph/Grafo_lista.h"
-#include "src/structures/graph/Grafo_matriz.cpp"
+#include <limits.h>
+
+#include "src/structures/graph/Grafo_Matriz.cpp"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ ofstream saida;
 string *getCurrentDirName();
 
 bool ehCmakeDir(const string *path);
+
+void abreAquivos();
 
 void abreInput();
 
@@ -36,15 +39,24 @@ int main(const int argc, const char *argv[]) {
 
     if (argc < 4 || argc > 5) {
         cout << "argumentos invalidos" << endl;
+        return 1;
     }
 
+    const auto grafo = new Grafo_matriz();
 
+        input = argv[3];
     if (argc == 4) {
-        const auto grafo = argv[2][1] == 'm' ? static_cast<Grafo *>(new Grafo_matriz()) : static_cast<Grafo *>(new
-        Grafo_lista());
+        out = "descricao.txt";
+
+        abreAquivos();
 
         grafo->carregar_grafo(&entrada, &saida);
     } else if (argc == 5) {
+        out = argv[4];
+
+        abreAquivos();
+
+        grafo->novo_grafo(&entrada, &saida);
     } else {
         cout << "argumentos invalidos" << endl;
     }
@@ -59,6 +71,23 @@ string *getCurrentDirName() {
     return new string(buffer);
 }
 
+bool ehCmakeDir(const string *path) {
+    return path->find("cmake-build-debug") != string::npos ||
+           path->find("cmake-build-release") != string::npos;
+}
+
+void abreAquivos() {
+    abreInput();
+    abreOutput();
+
+    if (!entrada.is_open() || !saida.is_open()) {
+        cout << "Erro ao abrir os arquivos!" << endl;
+        exit(1);
+    }
+
+    cout << "arquivos aberto" << endl;
+}
+
 void abreInput() {
     const auto path = getCurrentDirName();
 
@@ -66,7 +95,7 @@ void abreInput() {
         path->erase(path->find("cmake-build-debug"), path->length());
     }
 
-    path->append("/").append(diretorio).append("/").append(input);
+    path->append("/input/").append(input);
     entrada.open(*path, ios::in);
 
     delete path;
@@ -83,9 +112,4 @@ void abreOutput() {
     saida.open(*path, ios::out | ios::trunc);
 
     delete path;
-}
-
-bool ehCmakeDir(const string *path) {
-    return path->find("cmake-build-debug") != string::npos ||
-           path->find("cmake-build-release") != string::npos;
 }

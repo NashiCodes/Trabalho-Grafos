@@ -1,11 +1,11 @@
-#include "ListStorage.h"
+#include "../../../../include/structures/storage/list/List.h"
 
 template<class T>
-ListStorage<T>::ListStorage(): head(nullptr), tail(nullptr), size(0) {
+List<T>::List(): head(nullptr), tail(nullptr) {
 }
 
 template<class T>
-ListStorage<T>::~ListStorage() {
+List<T>::~List() {
     const auto *current = this->head;
     while (current != nullptr) {
         const auto *next = current->getNext();
@@ -17,7 +17,7 @@ ListStorage<T>::~ListStorage() {
 }
 
 template<class T>
-void ListStorage<T>::add(T info) {
+void List<T>::add(T info) {
     auto *node = new ListNode<T>(info);
     node->setNext(nullptr);
     node->setPrev(nullptr);
@@ -35,7 +35,7 @@ void ListStorage<T>::add(T info) {
 }
 
 template<class T>
-T ListStorage<T>::get(int ID) {
+T List<T>::get(int ID) {
     auto current = this->head;
     while (current != nullptr) {
         if (current->getNode()->getId() == ID) {

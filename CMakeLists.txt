@@ -4,18 +4,18 @@ project(trabalho)
 set(CMAKE_CXX_STANDARD 20)
 
 add_library(trabalho STATIC main.cpp
-        src/structures/graph/basics/Node.h
-        src/structures/graph/basics/Edge.h
-        src/structures/storage/Storage.h
-        src/structures/storage/List/ListStorage.cpp
-        src/structures/storage/List/ListStorage.h
-        src/structures/storage/List/ListNode.h
-        src/structures/storage/Matrices/Matrix.cpp
-        src/structures/storage/Matrices/Matrix.h
-        src/structures/graph/Grafo.h
+        include/structures/graph/basics/Node.h
+        include/structures/graph/basics/Edge.h
+        include/structures/storage/Storage.h
+        src/structures/storage/List/List.cpp
+        include/structures/storage/list/List.h
+        include/structures/storage/list/ListNode.h
+        include/structures/graph/Grafo.h
         src/structures/graph/Grafo_lista.cpp
-        src/structures/graph/Grafo_lista.h
+        include/structures/graph/Grafo_lista.h
         src/structures/graph/Grafo_matriz.cpp
-        src/structures/graph/Grafo_matriz.h
+        include/structures/graph/Grafo_matriz.h
         src/structures/graph/Grafo.cpp
+        src/structures/storage/Matrices/Matrix.cpp
+        include/structures/storage/matrices/Matrix.h
 )
