@@ -11,7 +11,7 @@ template<class T>
 class Storage {
 public:
     virtual ~Storage() = default;
-
+    virtual int getSize() { return 0; }
     virtual void add(T *info){}
     virtual T* get(int ID) { return nullptr; }
 };

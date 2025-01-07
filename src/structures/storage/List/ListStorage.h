@@ -18,6 +18,8 @@ public:
     void add(T *info) override;
     T *get(int ID) override;
 
+    [[nodiscard]] int getSize() const { return this->size; }
+
 private:
     ListNode<T> *head;
     ListNode<T> *tail;

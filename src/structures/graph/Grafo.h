@@ -1,17 +1,14 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 #include "../storage/List/ListStorage.cpp"
-#include "basics/Edge.h"
-#include "basics/Node.h"
-
+#include "basics/Edge.cpp"
+#include "basics/Node.cpp"
 
 
 class Grafo {
 public:
-    Grafo() : Grau(0), Direcionado(false), VerticePonderado(false),
-                                                        ArestaPonderada(false) {
-        this->NOS = new ListStorage<Node>();
-        this->ARESTAS = new ListStorage<Edge>();
+    Grafo() : Grau(0), Ordem(0), ArestaPonderada(false), VerticePonderado(false),
+              Direcionado(false), Input(nullptr), Output(nullptr) {
     }
 
     virtual ~Grafo() {
@@ -19,59 +16,62 @@ public:
         delete this->ARESTAS;
     }
 
-    virtual bool eh_bipartido() {
-        return false;
-    }
+    virtual bool eh_bipartido() { return false; };
 
-    virtual bool n_conexo() {
-        return false;
-    }
+    virtual bool n_conexo() { return false; };
 
-    virtual int get_grau() {
+    [[nodiscard]] int get_grau() const {
         return Grau;
     }
 
-    virtual bool eh_direcionado() {
+    [[nodiscard]] bool eh_direcionado() const {
         return Direcionado;
     }
 
-    virtual bool vertice_ponderado() {
+    [[nodiscard]] bool vertice_ponderado() const {
         return VerticePonderado;
     }
 
-    virtual bool aresta_ponderada() {
+    [[nodiscard]] bool aresta_ponderada() const {
         return ArestaPonderada;
     }
 
-    virtual bool eh_completo() {
-        return false;
-    }
+    virtual bool eh_completo() { return false; };
 
-    virtual bool eh_arvore() {
-        return false;
-    }
+    virtual bool eh_arvore() { return false; };
 
-    virtual bool possui_articulacao() {
-        return false;
-    }
+    virtual bool possui_articulacao() { return false; };
 
     virtual bool possui_ponte() {
         return false;
+    };
+
+    static auto carregar_grafo(ifstream *entrada, ofstream *saida, const char tipo);
+
+    static auto novo_grafo(const char tipo);
+
+    void set_aresta_ponderada(const bool aresta_ponderada) {
+        ArestaPonderada = aresta_ponderada;
     }
 
-    static void carregar_grafo(){}
-
-    static Grafo *novo_grafo(const char tipo) {
-        return new Grafo();
+    void set_vertice_ponderado(const bool vertice_ponderado) {
+        VerticePonderado = vertice_ponderado;
     }
 
-private:
+    virtual void set_direcionado(const bool direcionado) {
+        Direcionado = direcionado;
+    }
+
+protected:
+    int Grau;
+    int Ordem;
+    bool ArestaPonderada;
+    bool VerticePonderado;
+    bool Direcionado;
+    ifstream *Input;
+    ofstream *Output;
     Storage<Node> *NOS{};
     Storage<Edge> *ARESTAS{};
-    int Grau;
-    bool Direcionado;
-    bool VerticePonderado;
-    bool ArestaPonderada;
 };
 
 
