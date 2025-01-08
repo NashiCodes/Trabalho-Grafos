@@ -45,7 +45,6 @@ bool Grafo::eh_bipartido() {
     if (this->bipartidoPassado)
         return this->bipartido;
 
-
     this->bipartidoPassado = true;
 
     const auto colors = new vector<int>(this->Ordem, -1);
@@ -86,12 +85,12 @@ int Grafo::n_conexo() {
     this->componentesConexas = 0;
 
     auto visitados = vector<bool>();
-    auto conexos = vector<vector<int>>();
+    auto conexos = vector<vector<int> >();
     for (int i = 0; i < this->Ordem; i++) {
         visitados.push_back(false);
     }
 
-    for(int i = 0; i < this->Ordem; i++) {
+    for (int i = 0; i < this->Ordem; i++) {
         if (!visitados[i]) {
             conexos.emplace_back();
             const auto fecho = this->fechoTransitivoDireto(i + 1);
@@ -100,11 +99,11 @@ int Grafo::n_conexo() {
             }
             conexos[this->componentesConexas] = *fecho;
             delete fecho;
-            for (const auto &no : conexos[this->componentesConexas]) {
+            for (const auto &no: conexos[this->componentesConexas]) {
                 visitados[no - 1] = true;
             }
             this->componentesConexas++;
-            if (conexos[this->componentesConexas -1].size() == this->Ordem) {
+            if (conexos[this->componentesConexas - 1].size() == this->Ordem) {
                 return this->componentesConexas;
             }
         }
@@ -166,11 +165,48 @@ bool Grafo::possui_articulacao() const {
     return this->verticeArticulacao > 0;
 }
 
-bool Grafo::possui_ponte() const {
+bool Grafo::possui_ponte() {
     if (this->arestaPonte != -1) {
         return this->arestaPonte > 0;
     }
+
+    this->arestaPonte = 0;
+
+    auto visited = vector<bool>(this->Ordem+1, false);
+    auto disc = vector<int>(this->Ordem+1, -1);
+    auto low = vector<int>(this->Ordem+1, -1);
+
+    constexpr auto parent = -1;
+    auto time = 0;
+
+    for (int i = 1; i < this->Ordem; i++) {
+        if (!visited[i])
+            this->auxPonte(i, visited, disc, low, parent, time);
+    }
+
     return this->arestaPonte > 0;
+}
+
+void Grafo::auxPonte(const int u, vector<bool> &visited, vector<int> &disc, vector<int> &low, int parent, int &time) {
+    visited[u] = true;
+    disc[u] = low[u] = ++time;
+    const auto vizinhos = this->getVizinhos(u);
+    for (const auto &v: vizinhos) {
+        if (v != parent) {
+            if (visited[v]) {
+                low[u] = min(low[u], disc[v]);
+            } else {
+                parent = u;
+                auxPonte(v, visited, disc, low, parent, time);
+
+                low[u] = min(low[u], low[v]);
+
+                if (low[v] > disc[u]) {
+                    this->arestaPonte++;
+                }
+            }
+        }
+    }
 }
 
 void Grafo::set_aresta_ponderada(const bool aresta_ponderada) {
@@ -213,7 +249,7 @@ void Grafo::salvaGrafos() const {
         *this->Output << endl;
     }
 
-    //TODO: Criar Função para salvar arestas tanto para matriz quanto para lista
+    // TODO: Criar Função para salvar arestas tanto para matriz quanto para lista
 
     *this->Output << endl;
 }

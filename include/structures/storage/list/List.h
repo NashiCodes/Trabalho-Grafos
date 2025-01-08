@@ -15,7 +15,7 @@ public:
     void add(T info);
     T get(int ID);
 
-    int getSize() const { return this->size; }
+    [[nodiscard]] int getSize() const { return this->size; }
 
 private:
     int size = 0;

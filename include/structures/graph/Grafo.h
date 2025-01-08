@@ -16,7 +16,7 @@ public:
     virtual ~Grafo();
 
     vector<int>* fechoTransitivoDireto(int no);
-    
+
     void auxFechoTransitivoDireto(int no, vector<int> *visitados);
 
     [[nodiscard]] bool eh_bipartido();
@@ -41,7 +41,8 @@ public:
 
     [[nodiscard]] bool possui_articulacao() const;
 
-    [[nodiscard]] bool possui_ponte() const;
+    [[nodiscard]] bool possui_ponte();
+    void auxPonte(int u, vector<bool> &visited, vector<int> &disc, vector<int> &low, int parent, int &time);
 
     void carregar_grafo(ifstream *entrada, ofstream *saida);
 
