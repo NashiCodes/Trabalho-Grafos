@@ -87,6 +87,17 @@ bool Grafo::eh_completo() const {
     if (this->completoPassado)
         return this->completo;
 
+    this->completoPassado = true;
+
+    for(int i = 0;i < this->Ordem;i++){
+        const auto vizinhos = this->getVizinhos(i + 1);
+        if(vizinhos.size() != this->Ordem - 1){
+            this->completo = false;
+            return false;
+        }
+    }
+
+    this->completo = true;
     return this->completo;
 }
 
