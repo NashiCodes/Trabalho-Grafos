@@ -1,7 +1,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <iostream>
 
 #include "../../../include/structures/graph/Grafo.h"
 #include "../storage/List/List.cpp"

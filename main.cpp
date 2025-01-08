@@ -2,9 +2,11 @@
 #include <fstream>
 #include <unistd.h>
 #include <string>
-#include <limits.h>
 
+#include "src/structures/graph/Grafo.cpp"
+#include "src/structures/graph/Grafo_lista.cpp"
 #include "src/structures/graph/Grafo_Matriz.cpp"
+
 
 using namespace std;
 
@@ -42,7 +44,9 @@ int main(const int argc, const char *argv[]) {
         return 1;
     }
 
-    const auto grafo = new Grafo_matriz();
+    const auto grafo = argv[2][1] == 'm'
+                           ? static_cast<Grafo *>(new Grafo_matriz())
+                           : static_cast<Grafo *>(new Grafo_lista());
 
         input = argv[3];
     if (argc == 4) {

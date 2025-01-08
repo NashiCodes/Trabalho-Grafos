@@ -18,19 +18,19 @@ class MatrixLin final : public Matrix {
     int line;
     int column;
     vector<Edge *> matrix;
-    [[nodiscard]] bool verify(int i, int j) const;
+    [[nodiscard]] bool verify(int i, int j) const override;
     [[nodiscard]] int toLinearIndex(int i, int j) const;
 
 public:
     MatrixLin(int nl, int nc);
-    ~MatrixLin();
+    ~MatrixLin() override;
 
-    void set(int i, int j, Edge* info);
-    Edge* get(int i, int j);
+    void set(int i, int j, Edge* info) override;
+    Edge* get(int i, int j) override;
 
-    [[nodiscard]] int getMatrixSize() const { return line * column; }
+    [[nodiscard]] int getMatrixSize() const override { return line * column; }
 
-    void add(Edge *info);
+    void add(Edge *info) override;
 };
 
 

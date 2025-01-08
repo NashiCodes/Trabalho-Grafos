@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 20)
 add_library(trabalho STATIC main.cpp
         include/structures/graph/basics/Node.h
         include/structures/graph/basics/Edge.h
-        include/structures/storage/Storage.h
         src/structures/storage/List/List.cpp
         include/structures/storage/list/List.h
         include/structures/storage/list/ListNode.h

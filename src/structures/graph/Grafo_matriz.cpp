@@ -1,14 +1,16 @@
 
 #include "../../../include/structures/graph/Grafo_matriz.h"
-#include "Grafo.cpp"
 #include "../storage/Matrices/MatrixLin.cpp"
+#include "../storage/Matrices/Matrix.cpp"
 
 
 Grafo_matriz::Grafo_matriz(): ARESTAS(nullptr) {
     this->NOS = new List<Node *>();
 }
 
-Grafo_matriz::~Grafo_matriz() {
+Grafo_matriz::~Grafo_matriz(){
+    delete this->NOS;
+    delete this->ARESTAS;
 }
 
 bool Grafo_matriz::eh_bipartido() {

@@ -3,7 +3,6 @@
 //
 
 #include "../../../include/structures/graph/Grafo_lista.h"
-#include "Grafo.cpp"
 
 class Node;
 

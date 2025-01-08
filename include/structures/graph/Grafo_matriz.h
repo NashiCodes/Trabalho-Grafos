@@ -2,7 +2,8 @@
 #define GRAFO_MATRIZ_H
 
 #include "Grafo.h"
-#include "../../../src/structures/storage/Matrices/Matrix.cpp"
+
+#include "../storage/matrices/Matrix.h"
 
 
 class Grafo_matriz final : public Grafo {

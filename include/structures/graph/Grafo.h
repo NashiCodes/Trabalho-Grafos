@@ -2,12 +2,12 @@
 #define GRAFO_H
 
 #include <iostream>
+
 #include "../storage/list/List.h"
 #include "basics/Node.h"
 
 using namespace std;
 
-class Node;
 
 class Grafo {
 public:
@@ -41,11 +41,11 @@ public:
 
     void novo_grafo(ifstream *entrada, ofstream *saida);
 
-    void set_aresta_ponderada(const bool aresta_ponderada);
+    void set_aresta_ponderada(bool aresta_ponderada);
 
-    void set_vertice_ponderado(const bool vertice_ponderado);
+    void set_vertice_ponderado(bool vertice_ponderado);
 
-    virtual void set_direcionado(const bool direcionado);
+    virtual void set_direcionado(bool direcionado);
 
 protected:
     ifstream *Input;
