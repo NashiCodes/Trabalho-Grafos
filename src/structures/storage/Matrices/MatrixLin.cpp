@@ -1,14 +1,14 @@
 //
 // Created by dsalvaro on 07/01/2025.
 //
-
-#include "../../../../include/structures/storage/matrices/MatrixLin.h"
 #include <iostream>
+#include "../../../../include/structures/storage/matrices/MatrixLin.h"
+
 
 using namespace std;
 
 
-MatrixLin::MatrixLin(const int n): line(n), column(n) {
+MatrixLin::MatrixLin(const int n): Matrix(n) {
     this->matrixLin = vector<int>(n * (n + 1) / 2, 0);
 }
 
