@@ -15,9 +15,10 @@ public:
 
     virtual ~Grafo();
 
-    virtual bool eh_bipartido();
+    bool eh_bipartido();
+    bool auxBipartido(int no, int cor, vector<int> *colors);
 
-    virtual int n_conexo();
+    int n_conexo();
 
     [[nodiscard]] int get_ordem() const;
 
@@ -29,13 +30,13 @@ public:
 
     [[nodiscard]] bool aresta_ponderada() const;
 
-    virtual bool eh_completo();
+    bool eh_completo();
 
-    virtual bool eh_arvore();
+    bool eh_arvore();
 
-    virtual bool possui_articulacao();
+    bool possui_articulacao();
 
-    virtual bool possui_ponte();
+    bool possui_ponte();
 
     void carregar_grafo(ifstream *entrada, ofstream *saida);
 
@@ -47,17 +48,20 @@ public:
 
     virtual void set_direcionado(bool direcionado);
 
-    virtual void addAresta(Node *origem, Node *destino, int peso) {};
+    virtual void addAresta(Node *origem, Node *destino, int peso);
+private:
+
+    virtual vector<int> getVizinhos(int no) { return {}; }
 
 protected:
     ifstream *Input;
     ofstream *Output;
     List<Node *> *NOS;
-    int Grau = -1;
+    int Grau = 0;
     int componentesConexas = -1;
     int arestaPonte = -1;
     int verticeArticulacao = -1;
-    int Ordem = -1;
+    int Ordem = 0;
     bool ArestaPonderada;
     bool VerticePonderado;
     bool Direcionado;
@@ -72,6 +76,7 @@ protected:
     bool bipartidoPassado = false;
     bool arvorePassado = false;
 };
+
 
 
 #endif //GRAFO_H

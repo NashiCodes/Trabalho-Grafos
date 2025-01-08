@@ -56,6 +56,9 @@ int main(const int argc, const char *argv[]) {
         abreAquivos();
 
         grafo->carregar_grafo(&entrada, &saida);
+        cout << "grafo carregado" << endl;
+
+        cout << "grafo " << (grafo->eh_bipartido() ? "" : "nao ") << "eh bipartido" << endl;
     } else if (argc == 5) {
         out = argv[4];
 

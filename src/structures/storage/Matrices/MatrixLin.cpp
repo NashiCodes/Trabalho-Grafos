@@ -9,7 +9,7 @@ using namespace std;
 
 
 MatrixLin::MatrixLin(const int n): Matrix(n) {
-    this->matrixLin = vector<int>(n * (n + 1) / 2);
+    this->matrixLin = vector<int>(n * (n + 1) / 2, 0);
 }
 
 
@@ -17,28 +17,37 @@ MatrixLin::~MatrixLin() = default;
 
 
 bool MatrixLin::verify(const int i, const int j) const {
-    return i >= 0 && i < line && j >= 0 && j < column;
+    return i > 0 && i <= this->line && j > 0 && j <= this->column;
 }
 
 
-int MatrixLin::toLinearIndex(const int i, const int j) {
-    return i * (i + 1) / 2 + j;
+int MatrixLin::toLinearIndex(const int i, const int j) const {
+    if (i <= j) {
+        const int index = this->line * (i - 1) - (i - 2) * (i - 1) / 2 + (j - i);
+
+        return index;
+    }
+    return -1;
 }
 
 
 int MatrixLin::get(const int i, const int j) {
     if (!verify(i, j)) {
-        cout << "Index out of bounds" << endl;
-        return -1;
+        return 0;
     }
+
+    if (i > j)
+        return matrixLin.at(toLinearIndex(j, i));
     return matrixLin.at(toLinearIndex(i, j));
 }
 
 
-void MatrixLin::add(const int i, const int j, const int info) {
+void MatrixLin::add(const int i, const int j, int info) {
     if (!verify(i, j)) {
-        cout << "Index out of bounds" << endl;
         return;
     }
-    matrixLin[toLinearIndex(i, j)] = info;
+    if (i > j)
+        matrixLin.at(toLinearIndex(j, i)) = info;
+    else
+        matrixLin.at(toLinearIndex(i, j)) = info;
 }

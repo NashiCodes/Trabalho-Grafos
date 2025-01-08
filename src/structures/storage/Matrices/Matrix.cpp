@@ -6,17 +6,16 @@
 #include <iostream>
 
 Matrix::Matrix(const int n): line(n), column(n) {
-    this->matrix = vector(this->line, vector<int>(this->column));
+    this->matrix = vector(this->line, vector<int>(this->column, 0));
 }
 
 Matrix::~Matrix() = default;
 
 void Matrix::add(const int i, const int j, const int info) {
-    if (!verify(i, j)) {
-        cout << "Index out of bounds" << endl;
+    if (!verify(i - 1, j - 1)) {
         return;
     }
-    this->matrix[i][j] = info;
+    this->matrix[i - 1][j - 1] = info;
 }
 
 
@@ -26,11 +25,8 @@ bool Matrix::verify(const int i, const int j) const {
 
 
 int Matrix::get(const int i, const int j) {
-    if (!verify(i, j)) {
-        cout << "Index out of bounds" << endl;
-        return -1;
+    if (!verify(i - 1, j - 1)) {
+        return 0;
     }
-    return this->matrix[i][j];
+    return this->matrix[i - 1][j - 1];
 }
-
-

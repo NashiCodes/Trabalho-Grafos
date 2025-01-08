@@ -8,10 +8,10 @@
 class Node;
 using namespace std;
 
-Grafo::Grafo(): Input(nullptr), Output(nullptr), ArestaPonderada(false), VerticePonderado(false),
-                Direcionado(false), completo(false),
-                bipartido(false),
-                arvore(false) {
+Grafo::Grafo() : Input(nullptr), Output(nullptr), ArestaPonderada(false), VerticePonderado(false),
+                 Direcionado(false), completo(false),
+                 bipartido(false),
+                 arvore(false) {
     this->NOS = new List<Node *>();
 }
 
@@ -20,11 +20,43 @@ Grafo::~Grafo() {
 }
 
 bool Grafo::eh_bipartido() {
-    return this->bipartido;
+    if (this->bipartidoPassado)
+        return this->bipartido;
+
+
+    this->bipartidoPassado = true;
+
+    const auto colors = new vector<int>(this->Ordem, -1);
+
+    for (int i = 0; i < this->Ordem; i++) {
+        if (colors->at(i) == -1) {
+            if (!auxBipartido(i, 0, colors))
+                return false;
+        }
+    }
+
+    this->bipartido = true;
+    return true;
 }
 
-int Grafo::n_conexo()
-{
+bool Grafo::auxBipartido(const int no, int cor, vector<int> *colors) {
+    colors->at(no) = cor;
+
+    const auto vizinhos = this->getVizinhos(no + 1);
+
+    for (const auto &vizinho: vizinhos) {
+        if (colors->at(vizinho - 1) == -1) {
+            if (!auxBipartido(vizinho - 1, 1 - cor, colors))
+                return false;
+        } else if (colors->at(vizinho - 1) == cor) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int Grafo::n_conexo() {
     return this->componentesConexas;
 }
 
@@ -33,7 +65,7 @@ int Grafo::get_ordem() const {
 }
 
 int Grafo::get_grau() const {
-    return this->Grau;    
+    return this->Grau;
 }
 
 bool Grafo::eh_direcionado() const {
@@ -76,6 +108,9 @@ void Grafo::set_direcionado(const bool direcionado) {
     this->Direcionado = direcionado;
 }
 
+void Grafo::addAresta(Node *origem, Node *destino, int peso) {
+}
+
 void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {
     this->Input = entrada;
     this->Output = saida;
@@ -108,7 +143,14 @@ void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {
         iss = istringstream(line);
 
         int origem, destino, peso;
-        iss >> origem >> destino >> peso;
+
+        iss >> origem >> destino;
+
+        if (aPonderada) {
+            iss >> peso;
+        } else {
+            peso = 1;
+        }
 
         if (this->NOS->get(origem) == nullptr) {
             this->NOS->add(new Node(origem, 0));
@@ -121,6 +163,7 @@ void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {
         auto *noDestino = this->NOS->get(destino);
 
         this->addAresta(noOrigem, noDestino, peso);
+        this->Grau++;
     }
 }
 
@@ -128,7 +171,6 @@ void Grafo::novo_grafo(ifstream *entrada, ofstream *saida) {
     this->Input = entrada;
     this->Output = saida;
     string line;
-
 
     int i = 0;
 

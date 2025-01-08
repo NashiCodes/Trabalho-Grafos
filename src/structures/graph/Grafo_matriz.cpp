@@ -12,28 +12,15 @@ Grafo_matriz::~Grafo_matriz() {
     delete this->ARESTAS;
 }
 
-bool Grafo_matriz::eh_bipartido() {
-    return Grafo::eh_bipartido();
-}
+vector<int> Grafo_matriz::getVizinhos(const int no) {
+    auto vizinhos = vector<int>();
 
-int Grafo_matriz::n_conexo() {
-    return Grafo::n_conexo();
-}
-
-bool Grafo_matriz::eh_completo() {
-    return Grafo::eh_completo();
-}
-
-bool Grafo_matriz::eh_arvore() {
-    return Grafo::eh_arvore();
-}
-
-bool Grafo_matriz::possui_articulacao() {
-    return Grafo::possui_articulacao();
-}
-
-bool Grafo_matriz::possui_ponte() {
-    return Grafo::possui_ponte();
+    for (int i = 0; i <= this->Ordem; i++) {
+        if (this->ARESTAS->get(no, i) != 0) {
+            vizinhos.push_back(i);
+        }
+    }
+    return vizinhos;
 }
 
 void Grafo_matriz::set_direcionado(const bool direcionado) {
@@ -47,5 +34,5 @@ void Grafo_matriz::set_direcionado(const bool direcionado) {
 }
 
 void Grafo_matriz::addAresta(Node *origem, Node *destino, const int peso) {
-    this->ARESTAS->add(origem->getId() - 1, destino->getId() - 1, peso);
+    this->ARESTAS->add(origem->getId(), destino->getId(), peso);
 }

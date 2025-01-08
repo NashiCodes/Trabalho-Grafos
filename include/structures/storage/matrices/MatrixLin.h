@@ -17,7 +17,7 @@ using namespace std;
 class MatrixLin final : public Matrix {
     vector<int> matrixLin;
     [[nodiscard]] bool verify(int i, int j) const override;
-    [[nodiscard]] static int toLinearIndex(int i, int j) ;
+    [[nodiscard]] int toLinearIndex(int i, int j) const;
 
 public:
     explicit MatrixLin(int n);
