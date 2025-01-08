@@ -1,4 +1,5 @@
 #include <fstream>
+#include <algorithm>
 #include <sstream>
 #include <string>
 
@@ -17,6 +18,27 @@ Grafo::Grafo() : Input(nullptr), Output(nullptr), ArestaPonderada(false), Vertic
 
 Grafo::~Grafo() {
     delete this->NOS;
+}
+
+vector<int> *Grafo::fechoTransitivoDireto(const int no) {
+    if (this->NOS->get(no) == nullptr) {
+        return {};
+    }
+    const auto fecho = new vector<int>();
+    this->auxFechoTransitivoDireto(no, fecho);
+
+    return fecho;
+}
+
+void Grafo::auxFechoTransitivoDireto(const int no, vector<int> *visitados) {
+    visitados->push_back(no);
+
+    const auto vizinhos = this->getVizinhos(no);
+    for (const auto &vizinho: vizinhos) {
+        if (find(visitados->begin(), visitados->end(), vizinho) == visitados->end()) {
+            this->auxFechoTransitivoDireto(vizinho, visitados);
+        }
+    }
 }
 
 bool Grafo::eh_bipartido() {
@@ -56,10 +78,38 @@ bool Grafo::auxBipartido(const int no, const int cor, vector<int> *colors) {
     return true;
 }
 
-int Grafo::n_conexo() const {
+int Grafo::n_conexo() {
     if (this->componentesConexas != -1) {
         return this->componentesConexas;
     }
+
+    this->componentesConexas = 0;
+
+    auto visitados = vector<bool>();
+    auto conexos = vector<vector<int>>();
+    for (int i = 0; i < this->Ordem; i++) {
+        visitados.push_back(false);
+    }
+
+    for(int i = 0; i < this->Ordem; i++) {
+        if (!visitados[i]) {
+            conexos.emplace_back();
+            const auto fecho = this->fechoTransitivoDireto(i + 1);
+            if (fecho == nullptr) {
+                continue;
+            }
+            conexos[this->componentesConexas] = *fecho;
+            delete fecho;
+            for (const auto &no : conexos[this->componentesConexas]) {
+                visitados[no - 1] = true;
+            }
+            this->componentesConexas++;
+            if (conexos[this->componentesConexas -1].size() == this->Ordem) {
+                return this->componentesConexas;
+            }
+        }
+    }
+
     return this->componentesConexas;
 }
 
@@ -83,15 +133,15 @@ bool Grafo::aresta_ponderada() const {
     return this->ArestaPonderada;
 }
 
-bool Grafo::eh_completo() const {
+bool Grafo::eh_completo() {
     if (this->completoPassado)
         return this->completo;
 
     this->completoPassado = true;
 
-    for(int i = 0;i < this->Ordem;i++){
+    for (int i = 0; i < this->Ordem; i++) {
         const auto vizinhos = this->getVizinhos(i + 1);
-        if(vizinhos.size() != this->Ordem - 1){
+        if (vizinhos.size() != this->Ordem - 1) {
             this->completo = false;
             return false;
         }

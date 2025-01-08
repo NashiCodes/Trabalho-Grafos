@@ -15,7 +15,6 @@ public:
         this->PESO = PESO;
         this->GRAU_ENTRADA = 0;
         this->GRAU_SAIDA = 0;
-        this->PASSOU = false;
         this->Arestas = vector<Edge *>();
     }
 
@@ -23,7 +22,6 @@ public:
     [[nodiscard]] int getPeso() const { return PESO; }
     [[nodiscard]] int getGrauEntrada() const { return GRAU_ENTRADA; }
     [[nodiscard]] int getGrauSaida() const { return GRAU_SAIDA; }
-    [[nodiscard]] bool getPassou() const { return PASSOU; }
     [[nodiscard]] vector<Edge *> getArestas() const { return Arestas; }
 
     void set_grau_entrada(const int grau_entrada) { GRAU_ENTRADA = grau_entrada; }
@@ -39,7 +37,6 @@ private:
     int PESO;
     int GRAU_ENTRADA;
     int GRAU_SAIDA;
-    bool PASSOU;
     vector<Edge *> Arestas;
 };
 

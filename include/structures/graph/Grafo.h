@@ -15,11 +15,15 @@ public:
 
     virtual ~Grafo();
 
+    vector<int>* fechoTransitivoDireto(int no);
+    
+    void auxFechoTransitivoDireto(int no, vector<int> *visitados);
+
     [[nodiscard]] bool eh_bipartido();
 
     bool auxBipartido(int no, int cor, vector<int> *colors);
 
-    [[nodiscard]] int n_conexo() const;
+    [[nodiscard]] int n_conexo();
 
     [[nodiscard]] int get_ordem() const;
 
@@ -31,7 +35,7 @@ public:
 
     [[nodiscard]] bool aresta_ponderada() const;
 
-    [[nodiscard]] bool eh_completo() const;
+    [[nodiscard]] bool eh_completo();
 
     [[nodiscard]] bool eh_arvore() const;
 
