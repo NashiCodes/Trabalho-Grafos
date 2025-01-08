@@ -27,6 +27,26 @@ void Grafo_lista::addAresta(Node *origem, Node *destino, const int peso) {
     }
 }
 
+void Grafo_lista::removeVertice(const int no) {
+    const auto node = this->NOS->get(no);
+
+    if (node == nullptr) {
+        return;
+    }
+
+    for (const auto aresta : node->getArestas()) {
+        const auto destino = aresta->getDestino() == node ? aresta->getOrigem() : aresta->getDestino();
+        destino->removeAresta(aresta);
+        node->set_grau_entrada(node->getGrauEntrada() - 1);
+    }
+
+    this->NOS->remove(node);
+
+    delete node;
+
+    this->Ordem--;
+}
+
 vector<int> Grafo_lista::getVizinhos(const int no) {
     auto vizinhos = vector<int>();
 

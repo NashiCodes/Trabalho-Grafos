@@ -18,6 +18,8 @@ public:
     void set_direcionado(bool direcionado) override;
 
     void addAresta(Node *origem, Node *destino, int peso) override;
+
+    void removeVertice(int no) override;
 };
 
 

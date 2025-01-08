@@ -40,7 +40,8 @@ public:
     [[nodiscard]] bool eh_arvore();
     bool eh_Ciclo(int no, vector<bool>* visitados, int pai);
 
-    [[nodiscard]] bool possui_articulacao() const;
+    [[nodiscard]] bool possui_articulacao();
+    void auxArticulacao(vector<bool> *visitados, int pivot, int current);
 
     [[nodiscard]] bool possui_ponte();
     void auxPonte(int u, vector<bool> &visited, vector<int> &disc, vector<int> &low, int parent, int &time);
@@ -60,6 +61,8 @@ public:
     void salvaDescricao();
 
     void salvaGrafos() const;
+
+    virtual void removeVertice(int no);
 
 private:
     virtual vector<int> getVizinhos(int no) { return {}; }

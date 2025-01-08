@@ -18,6 +18,12 @@ public:
         this->Arestas = vector<Edge *>();
     }
 
+    ~Node() {
+        for (auto aresta : this->Arestas) {
+            delete aresta;
+        }
+    }
+
     [[nodiscard]] int getId() const { return ID; }
     [[nodiscard]] int getPeso() const { return PESO; }
     [[nodiscard]] int getGrauEntrada() const { return GRAU_ENTRADA; }
@@ -30,6 +36,15 @@ public:
     void addAresta(Edge *aresta) {
         this->Arestas.push_back(aresta);
         this->GRAU_SAIDA++;
+    }
+    void removeAresta(Edge *aresta) {
+        for (int i = 0; i < this->Arestas.size(); i++) {
+            if (this->Arestas[i] == aresta) {
+                this->Arestas.erase(this->Arestas.begin() + i);
+                this->GRAU_SAIDA--;
+                break;
+            }
+        }
     }
 
 private:

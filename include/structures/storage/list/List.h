@@ -16,6 +16,7 @@ public:
     T get(int ID);
 
     [[nodiscard]] int getSize() const { return this->size; }
+    void remove(T info);
 
 private:
     int size = 0;

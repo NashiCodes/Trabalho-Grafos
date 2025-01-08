@@ -117,21 +117,7 @@ int Grafo::get_ordem() const {
 }
 
 int Grafo::get_grau() const {
-    if (this->Grau != 0){
         return this->Grau;
-    }
-    
-    int grau = 0;
-    for(int i = 0;i < this->Ordem;i++){
-        const auto vizinhos = this->getVizinhos(i + 1);
-        int grauAtual = vizinhos.size();
-
-        if(grauAtual > grau){
-            grau = grauAtual;
-        }
-    }
-
-    return grau;
 }
 
 bool Grafo::eh_direcionado() const {
@@ -199,12 +185,41 @@ bool Grafo::eh_Ciclo(const int no, vector<bool> *visitados, const int pai) {
     return false;
 }
 
-bool Grafo::possui_articulacao() const {
+bool Grafo::possui_articulacao() {
     if (this->verticeArticulacao != -1) {
         return this->verticeArticulacao > 0;
     }
+    this->verticeArticulacao = 0;
+
+    for (int i = 1; i <= this->Ordem; i++) {
+        auto componentes = 0;
+
+        auto visitados = vector<bool>(this->Ordem + 1, false);
+
+        for (int j = 1; j <= this->Ordem; j++) {
+            if (!visitados[j] && j != i) {
+                componentes++;
+                this->auxArticulacao(&visitados, i, j);
+            }
+        }
+
+        if (componentes > 1) {
+            this->verticeArticulacao++;
+        }
+    }
 
     return this->verticeArticulacao > 0;
+}
+
+void Grafo::auxArticulacao(vector<bool> *visitados, int pivot, int current) {
+    visitados->at(current) = true;
+
+    const auto vizinhos = this->getVizinhos(current);
+    for (const auto &vizinho: vizinhos) {
+        if (!visitados->at(vizinho) && vizinho != pivot) {
+            this->auxArticulacao(visitados, pivot, vizinho);
+        }
+    }
 }
 
 bool Grafo::possui_ponte() {
@@ -294,6 +309,9 @@ void Grafo::salvaGrafos() const {
     // TODO: Criar Função para salvar arestas tanto para matriz quanto para lista
 
     *this->Output << endl;
+}
+
+void Grafo::removeVertice(int no) {
 }
 
 void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {

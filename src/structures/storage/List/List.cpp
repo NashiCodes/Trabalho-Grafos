@@ -12,8 +12,6 @@ List<T>::~List() {
         delete current;
         current = next;
     }
-
-    delete this;
 }
 
 template<class T>
@@ -45,4 +43,29 @@ T List<T>::get(int ID) {
     }
 
     return nullptr;
+}
+
+template<class T>
+void List<T>::remove(T info) {
+    auto current = this->head;
+    while (current != nullptr) {
+        if (current->getNode() == info) {
+            if (current->getPrev() != nullptr) {
+                current->getPrev()->setNext(current->getNext());
+            } else {
+                this->head = current->getNext();
+            }
+
+            if (current->getNext() != nullptr) {
+                current->getNext()->setPrev(current->getPrev());
+            } else {
+                this->tail = current->getPrev();
+            }
+
+            delete current;
+            --this->size;
+            return;
+        }
+        current = current->getNext();
+    }
 }

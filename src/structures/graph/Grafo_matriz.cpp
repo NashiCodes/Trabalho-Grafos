@@ -1,9 +1,11 @@
 #include "../../../include/structures/graph/Grafo_matriz.h"
+
+#include <memory>
+
 #include "../storage/Matrices/MatrixLin.cpp"
 #include "../storage/Matrices/Matrix.cpp"
 
-
-Grafo_matriz::Grafo_matriz(): ARESTAS(nullptr) {
+Grafo_matriz::Grafo_matriz() : ARESTAS(nullptr) {
     this->NOS = new List<Node *>();
 }
 
@@ -35,4 +37,19 @@ void Grafo_matriz::set_direcionado(const bool direcionado) {
 
 void Grafo_matriz::addAresta(Node *origem, Node *destino, const int peso) {
     this->ARESTAS->add(origem->getId(), destino->getId(), peso);
+}
+
+void Grafo_matriz::removeVertice(int no) {
+    for (int i = 1; i <= this->Ordem; i++) {
+        this->ARESTAS->add(no, i, 0);
+        this->ARESTAS->add(i, no, 0);
+    }
+
+    auto node = this->NOS->get(no);
+
+    this->NOS->remove(this->NOS->get(no));
+
+    delete node;
+
+    this->Ordem--;
 }
