@@ -50,4 +50,5 @@ CMakeUserPresets.json
 /.idea/trabalho.iml
 /.idea/vcs.xml
 /.vscode
-/cmake-build-debug/
+/cmake-build-***/
+build/
