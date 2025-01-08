@@ -117,6 +117,10 @@ int Grafo::get_ordem() const {
 }
 
 int Grafo::get_grau() const {
+    if (this->Grau != 0){
+        return this->Grau;
+    }
+    
     int grau = 0;
     for(int i = 0;i < this->Ordem;i++){
         const auto vizinhos = this->getVizinhos(i + 1);
@@ -126,7 +130,7 @@ int Grafo::get_grau() const {
             grau = grauAtual;
         }
     }
-    
+
     return grau;
 }
 
