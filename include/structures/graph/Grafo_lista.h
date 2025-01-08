@@ -26,7 +26,9 @@ public:
 
     bool possui_ponte() override;
 
-    void set_direcionado(const bool direcionado) override;
+    void set_direcionado(bool direcionado) override;
+
+    void addAresta(Node *origem, Node *destino, int peso) override;
 };
 
 

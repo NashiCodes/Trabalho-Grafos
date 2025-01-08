@@ -65,3 +65,16 @@ bool Grafo_lista::possui_ponte() {
 void Grafo_lista::set_direcionado(const bool direcionado) {
     Grafo::set_direcionado(direcionado);
 }
+
+void Grafo_lista::addAresta(Node *origem, Node *destino, const int peso) {
+
+    const auto Aresta = new Edge(origem, destino, peso);
+
+    origem->addAresta(Aresta);
+    destino->set_grau_entrada(origem->getGrauEntrada() + 1);
+
+    if (!this->Direcionado) {
+        destino->addAresta(Aresta);
+        origem->set_grau_entrada(destino->getGrauEntrada() + 1);
+    }
+}

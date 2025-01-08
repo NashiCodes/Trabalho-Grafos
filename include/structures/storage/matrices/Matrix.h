@@ -7,29 +7,28 @@
 
 #include <vector>
 
-#include "../../graph/basics/Edge.h"
 
 using namespace std;
 
 class Matrix {
+    vector<vector<int> > matrix;
+protected:
     int line;
     int column;
-    vector<vector<Edge *>> matrix;
+
     [[nodiscard]] virtual bool verify(int i, int j) const;
 
 public:
-    Matrix(int nl, int nc);
+    explicit Matrix(int n);
 
     virtual ~Matrix();
 
-    virtual void set(int i, int j, Edge *info);
+    virtual void add(int i, int j, int info);
 
-    virtual Edge* get(int i, int j);
-    [[nodiscard]] virtual int getMatrixSize() const { return line * column; }
+    virtual int get(int i, int j);
 
-    virtual void add(Edge* info);
+    [[nodiscard]] virtual int getMatrixSize() const { return this->line * this->column; }
 };
-
 
 
 #endif //MATRIX2_H

@@ -5,14 +5,18 @@
 #include "../../../../include/structures/storage/matrices/Matrix.h"
 #include <iostream>
 
-Matrix::Matrix(const int nl, const int nc) {
-    this->line= nl;
-    this->column = nc;
-
-    this->matrix = vector(this->line,vector<Edge *>(this->column));
+Matrix::Matrix(const int n): line(n), column(n) {
+    this->matrix = vector(this->line, vector<int>(this->column));
 }
 
-Matrix::~Matrix() {
+Matrix::~Matrix() = default;
+
+void Matrix::add(const int i, const int j, const int info) {
+    if (!verify(i, j)) {
+        cout << "Index out of bounds" << endl;
+        return;
+    }
+    this->matrix[i][j] = info;
 }
 
 
@@ -21,26 +25,12 @@ bool Matrix::verify(const int i, const int j) const {
 }
 
 
-Edge *Matrix::get(const int i, const int j) {
+int Matrix::get(const int i, const int j) {
     if (!verify(i, j)) {
         cout << "Index out of bounds" << endl;
-        return nullptr;
+        return -1;
     }
     return this->matrix[i][j];
 }
 
-void Matrix::add(Edge *info) {
-    const auto edge = info;
-    const int i = edge->getOrigem()->getId() - 1;
-    const int j = edge->getDestino()->getId() - 1;
-    this->set(i, j, info);
-}
 
-
-void Matrix::set(const int i, const int j, Edge *info) {
-    if (!verify(i, j)) {
-        cout << "Index out of bounds" << endl;
-        return;
-    }
-    this->matrix[i][j] = info;
-}

@@ -8,18 +8,12 @@
 using namespace std;
 
 
-MatrixLin::MatrixLin(const int nl, const int nc): Matrix(nl, nc) {
-    this->line = nl;
-    this->column = nc;
-    this->matrix = vector<Edge *>(this->line * this->column);
+MatrixLin::MatrixLin(const int n): Matrix(n) {
+    this->matrixLin = vector<int>(n * (n + 1) / 2);
 }
 
 
-MatrixLin::~MatrixLin() {
-    for (const auto &i : matrix) {
-        delete i;
-    }
-}
+MatrixLin::~MatrixLin() = default;
 
 
 bool MatrixLin::verify(const int i, const int j) const {
@@ -27,32 +21,24 @@ bool MatrixLin::verify(const int i, const int j) const {
 }
 
 
-int MatrixLin::toLinearIndex(const int i, const int j) const {
-    return i * column + j;
+int MatrixLin::toLinearIndex(const int i, const int j) {
+    return i * (i + 1) / 2 + j;
 }
 
 
-Edge *MatrixLin::get(const int i, const int j) {
+int MatrixLin::get(const int i, const int j) {
     if (!verify(i, j)) {
         cout << "Index out of bounds" << endl;
-        return nullptr;
+        return -1;
     }
-    return matrix[toLinearIndex(i, j)];
+    return matrixLin.at(toLinearIndex(i, j));
 }
 
 
-void MatrixLin::add(Edge *info) {
-    const auto edge = info;
-    const int i = edge->getOrigem()->getId() - 1;
-    const int j = edge->getDestino()->getId() - 1;
-    this->set(i, j, info);
-}
-
-
-void MatrixLin::set(const int i, const int j, Edge *info)  {
+void MatrixLin::add(const int i, const int j, const int info) {
     if (!verify(i, j)) {
         cout << "Index out of bounds" << endl;
         return;
     }
-    matrix[toLinearIndex(i, j)] = info;
+    matrixLin[toLinearIndex(i, j)] = info;
 }

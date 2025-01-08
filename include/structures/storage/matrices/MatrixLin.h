@@ -15,22 +15,18 @@ using namespace std;
  */
 
 class MatrixLin final : public Matrix {
-    int line;
-    int column;
-    vector<Edge *> matrix;
+    vector<int> matrixLin;
     [[nodiscard]] bool verify(int i, int j) const override;
-    [[nodiscard]] int toLinearIndex(int i, int j) const;
+    [[nodiscard]] static int toLinearIndex(int i, int j) ;
 
 public:
-    MatrixLin(int nl, int nc);
+    explicit MatrixLin(int n);
     ~MatrixLin() override;
 
-    void set(int i, int j, Edge* info) override;
-    Edge* get(int i, int j) override;
+    void add(int i, int j, int info) override;
+    int get(int i, int j) override;
 
-    [[nodiscard]] int getMatrixSize() const override { return line * column; }
-
-    void add(Edge *info) override;
+    [[nodiscard]] int getMatrixSize() const override { return this->line * this->column; }
 };
 
 

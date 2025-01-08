@@ -47,6 +47,8 @@ public:
 
     virtual void set_direcionado(bool direcionado);
 
+    virtual void addAresta(Node *origem, Node *destino, int peso) {};
+
 protected:
     ifstream *Input;
     ofstream *Output;

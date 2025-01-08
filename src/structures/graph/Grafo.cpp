@@ -119,6 +119,8 @@ void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {
 
         auto *noOrigem = this->NOS->get(origem);
         auto *noDestino = this->NOS->get(destino);
+
+        this->addAresta(noOrigem, noDestino, peso);
     }
 }
 

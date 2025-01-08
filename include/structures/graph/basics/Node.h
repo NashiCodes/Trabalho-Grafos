@@ -29,8 +29,9 @@ public:
     void set_grau_entrada(const int grau_entrada) { GRAU_ENTRADA = grau_entrada; }
     void set_grau_saida(const int grau_saida) { GRAU_SAIDA = grau_saida; }
 
-    void add_aresta(Edge *aresta) {
-        Arestas.push_back(aresta);
+    void addAresta(Edge *aresta) {
+        this->Arestas.push_back(aresta);
+        this->GRAU_SAIDA++;
     }
 
 private:

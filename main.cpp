@@ -1,8 +1,9 @@
-#include <iostream>
 #include <fstream>
-#include <unistd.h>
+#include <iostream>
 #include <string>
+#include <unistd.h>
 
+// ReSharper disable once CppUnusedIncludeDirective
 #include "src/structures/graph/Grafo.cpp"
 #include "src/structures/graph/Grafo_lista.cpp"
 #include "src/structures/graph/Grafo_Matriz.cpp"
