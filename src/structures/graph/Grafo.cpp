@@ -39,7 +39,7 @@ bool Grafo::eh_bipartido() {
     return true;
 }
 
-bool Grafo::auxBipartido(const int no, int cor, vector<int> *colors) {
+bool Grafo::auxBipartido(const int no, const int cor, vector<int> *colors) {
     colors->at(no) = cor;
 
     const auto vizinhos = this->getVizinhos(no + 1);
@@ -56,7 +56,10 @@ bool Grafo::auxBipartido(const int no, int cor, vector<int> *colors) {
     return true;
 }
 
-int Grafo::n_conexo() {
+int Grafo::n_conexo() const {
+    if (this->componentesConexas != -1) {
+        return this->componentesConexas;
+    }
     return this->componentesConexas;
 }
 
@@ -80,19 +83,32 @@ bool Grafo::aresta_ponderada() const {
     return this->ArestaPonderada;
 }
 
-bool Grafo::eh_completo() {
+bool Grafo::eh_completo() const {
+    if (this->completoPassado)
+        return this->completo;
+
     return this->completo;
 }
 
-bool Grafo::eh_arvore() {
+bool Grafo::eh_arvore() const {
+    if (this->arvorePassado)
+        return this->arvore;
+
     return this->arvore;
 }
 
-bool Grafo::possui_articulacao() {
+bool Grafo::possui_articulacao() const {
+    if (this->verticeArticulacao != -1) {
+        return this->verticeArticulacao > 0;
+    }
+
     return this->verticeArticulacao > 0;
 }
 
-bool Grafo::possui_ponte() {
+bool Grafo::possui_ponte() const {
+    if (this->arestaPonte != -1) {
+        return this->arestaPonte > 0;
+    }
     return this->arestaPonte > 0;
 }
 
@@ -109,6 +125,36 @@ void Grafo::set_direcionado(const bool direcionado) {
 }
 
 void Grafo::addAresta(Node *origem, Node *destino, int peso) {
+}
+
+void Grafo::salvaDescricao() {
+    *this->Output << this->get_grau() << endl;
+    *this->Output << this->get_ordem() << endl;
+    *this->Output << this->eh_direcionado() << endl;
+    *this->Output << this->n_conexo() << endl;
+    *this->Output << this->vertice_ponderado() << endl;
+    *this->Output << this->aresta_ponderada() << endl;
+    *this->Output << this->eh_completo() << endl;
+    *this->Output << this->eh_bipartido() << endl;
+    *this->Output << this->eh_arvore() << endl;
+    *this->Output << this->possui_ponte() << endl;
+    *this->Output << this->possui_articulacao() << endl;
+}
+
+void Grafo::salvaGrafos() const {
+    *this->Output << this->get_ordem() << " " << this->eh_direcionado() << " " << this->vertice_ponderado() << " "
+            << this->aresta_ponderada() << endl;
+
+    if (this->vertice_ponderado()) {
+        for (int i = 1; i <= this->NOS->getSize(); i++) {
+            *this->Output << this->NOS->get(i)->getPeso() << " ";
+        }
+        *this->Output << endl;
+    }
+
+    //TODO: Criar Função para salvar arestas tanto para matriz quanto para lista
+
+    *this->Output << endl;
 }
 
 void Grafo::carregar_grafo(ifstream *entrada, ofstream *saida) {

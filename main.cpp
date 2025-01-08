@@ -49,16 +49,15 @@ int main(const int argc, const char *argv[]) {
                            ? static_cast<Grafo *>(new Grafo_matriz())
                            : static_cast<Grafo *>(new Grafo_lista());
 
-        input = argv[3];
+    input = argv[3];
     if (argc == 4) {
         out = "descricao.txt";
 
         abreAquivos();
 
         grafo->carregar_grafo(&entrada, &saida);
-        cout << "grafo carregado" << endl;
-
-        cout << "grafo " << (grafo->eh_bipartido() ? "" : "nao ") << "eh bipartido" << endl;
+        grafo->salvaDescricao();
+        grafo->salvaGrafos();
     } else if (argc == 5) {
         out = argv[4];
 
@@ -68,7 +67,6 @@ int main(const int argc, const char *argv[]) {
     } else {
         cout << "argumentos invalidos" << endl;
     }
-
 
     return 0;
 }
