@@ -117,7 +117,17 @@ int Grafo::get_ordem() const {
 }
 
 int Grafo::get_grau() const {
-    return this->Grau;
+    int grau = 0;
+    for(int i = 0;i < this->Ordem;i++){
+        const auto vizinhos = this->getVizinhos(i + 1);
+        int grauAtual = vizinhos.size();
+
+        if(grauAtual > grau){
+            grau = grauAtual;
+        }
+    }
+    
+    return grau;
 }
 
 bool Grafo::eh_direcionado() const {
