@@ -53,3 +53,39 @@ void Grafo_matriz::removeVertice(int no) {
 
     this->Ordem--;
 }
+
+void Grafo_matriz::salvaGrafos() {
+    *this->Output << this->get_ordem() << " " << this->eh_direcionado() << " " << this->vertice_ponderado() << " "
+            << this->aresta_ponderada() << endl;
+
+    if (this->vertice_ponderado()) {
+        for (int i = 1; i <= this->NOS->getSize(); i++) {
+            *this->Output << this->NOS->get(i)->getPeso() << " ";
+        }
+        *this->Output << endl;
+    }
+
+    auto visitados = vector<bool>(this->Ordem + 1, false);
+    for (int no = 1; no <= Ordem; no++) {
+        for (int i = 1; i <= Ordem; i++) {
+            if (this->ARESTAS->get(no, i) != 0) {
+                if (this->Direcionado) {
+                    *this->Output << no << " " << i << " ";
+                    if (this->aresta_ponderada()) {
+                        *this->Output << this->ARESTAS->get(no, i) << endl;
+                    } else {
+                        *this->Output << endl;
+                    }
+                } else if (!visitados[i]) {
+                    *this->Output << no << " " << i << " ";
+                    if (this->aresta_ponderada()) {
+                        *this->Output << this->ARESTAS->get(no, i) << endl;
+                    } else {
+                        *this->Output << endl;
+                    }
+                }
+            }
+        }
+        visitados[no] = true;        
+    }
+}

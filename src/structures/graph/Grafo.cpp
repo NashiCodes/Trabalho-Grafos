@@ -295,20 +295,7 @@ void Grafo::salvaDescricao() {
     *this->Output << this->possui_articulacao() << endl;
 }
 
-void Grafo::salvaGrafos() const {
-    *this->Output << this->get_ordem() << " " << this->eh_direcionado() << " " << this->vertice_ponderado() << " "
-            << this->aresta_ponderada() << endl;
-
-    if (this->vertice_ponderado()) {
-        for (int i = 1; i <= this->NOS->getSize(); i++) {
-            *this->Output << this->NOS->get(i)->getPeso() << " ";
-        }
-        *this->Output << endl;
-    }
-
-    // TODO: Criar Função para salvar arestas tanto para matriz quanto para lista
-
-    *this->Output << endl;
+void Grafo::salvaGrafos() {
 }
 
 void Grafo::removeVertice(int no) {

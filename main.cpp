@@ -57,13 +57,13 @@ int main(const int argc, const char *argv[]) {
 
         grafo->carregar_grafo(&entrada, &saida);
         grafo->salvaDescricao();
-        grafo->salvaGrafos();
     } else if (argc == 5) {
         out = argv[4];
 
         abreAquivos();
 
         grafo->novo_grafo(&entrada, &saida);
+        grafo->salvaGrafos();
     } else {
         cout << "argumentos invalidos" << endl;
     }

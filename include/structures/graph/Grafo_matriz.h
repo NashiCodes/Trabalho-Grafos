@@ -20,6 +20,8 @@ public:
     void addAresta(Node *origem, Node *destino, int peso) override;
 
     void removeVertice(int no) override;
+
+    void salvaGrafos() override;
 };
 
 

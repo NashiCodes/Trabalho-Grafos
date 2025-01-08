@@ -60,7 +60,7 @@ public:
 
     void salvaDescricao();
 
-    void salvaGrafos() const;
+    virtual void salvaGrafos();
 
     virtual void removeVertice(int no);
 
