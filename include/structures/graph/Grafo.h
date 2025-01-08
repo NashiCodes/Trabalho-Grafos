@@ -37,7 +37,8 @@ public:
 
     [[nodiscard]] bool eh_completo();
 
-    [[nodiscard]] bool eh_arvore() const;
+    [[nodiscard]] bool eh_arvore();
+    bool eh_Ciclo(int no, vector<bool>* visitados, int pai);
 
     [[nodiscard]] bool possui_articulacao() const;
 

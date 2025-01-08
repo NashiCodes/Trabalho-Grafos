@@ -150,11 +150,39 @@ bool Grafo::eh_completo() {
     return this->completo;
 }
 
-bool Grafo::eh_arvore() const {
+bool Grafo::eh_arvore() {
     if (this->arvorePassado)
         return this->arvore;
+    if (this->n_conexo() != 1) {
+        this->arvore = false;
+        return false;
+    }
 
+    auto visitados = vector<bool>(this->Ordem + 1, false);
+    if (eh_Ciclo(1, &visitados, -1)) {
+        this->arvore = false;
+        return false;
+    }
+
+    this->arvore = true;
     return this->arvore;
+}
+
+bool Grafo::eh_Ciclo(const int no, vector<bool> *visitados, const int pai) {
+    visitados->at(no) = true;
+
+    const auto vizinhos = this->getVizinhos(no);
+    for (const auto &vizinho: vizinhos) {
+        if (!visitados->at(vizinho)) {
+            if (eh_Ciclo(vizinho, visitados, no)) {
+                return true;
+            }
+        } else if (vizinho != pai) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 bool Grafo::possui_articulacao() const {
@@ -172,16 +200,16 @@ bool Grafo::possui_ponte() {
 
     this->arestaPonte = 0;
 
-    auto visited = vector<bool>(this->Ordem+1, false);
-    auto disc = vector<int>(this->Ordem+1, -1);
-    auto low = vector<int>(this->Ordem+1, -1);
+    auto visitados = vector<bool>(this->Ordem + 1, false);
+    auto disc = vector<int>(this->Ordem + 1, -1);
+    auto low = vector<int>(this->Ordem + 1, -1);
 
     constexpr auto parent = -1;
     auto time = 0;
 
     for (int i = 1; i < this->Ordem; i++) {
-        if (!visited[i])
-            this->auxPonte(i, visited, disc, low, parent, time);
+        if (!visitados[i])
+            this->auxPonte(i, visitados, disc, low, parent, time);
     }
 
     return this->arestaPonte > 0;
