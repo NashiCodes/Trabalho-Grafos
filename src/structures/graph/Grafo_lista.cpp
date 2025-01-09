@@ -29,6 +29,22 @@ void Grafo_lista::addAresta(Node *origem, Node *destino, const int peso) {
     this->ARESTAS->add(Aresta);
 }
 
+void Grafo_lista::removeAresta(Node *origem, Node *destino) {
+    for (const auto aresta: origem->getArestas()) {
+        if (aresta->getDestino() == destino || aresta->getOrigem() == destino) {
+            origem->removeAresta(aresta);
+            destino->removeAresta(aresta);
+            this->ARESTAS->remove(aresta);
+            delete aresta;
+            break;
+        }
+    }
+}
+
+void Grafo_lista::restaurarAresta(Node *origem, Node *destino, int peso) {
+    this->addAresta(origem, destino, peso);
+}
+
 void Grafo_lista::removeVertice(const int no) {
     const auto node = this->NOS->get(no);
 

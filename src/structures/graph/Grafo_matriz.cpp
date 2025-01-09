@@ -39,6 +39,17 @@ void Grafo_matriz::addAresta(Node *origem, Node *destino, const int peso) {
     this->ARESTAS->add(origem->getId(), destino->getId(), peso);
 }
 
+void Grafo_matriz::removeAresta(Node *origem, Node *destino) {
+    this->ARESTAS->add(origem->getId(), destino->getId(), 0);
+    if (!this->Direcionado) {
+        this->ARESTAS->add(destino->getId(), origem->getId(), 0);
+    }
+}
+
+void Grafo_matriz::restaurarAresta(Node *origem, Node *destino, int peso) {
+    this->addAresta(origem, destino, peso);
+}
+
 void Grafo_matriz::removeVertice(int no) {
     for (int i = 1; i <= this->Ordem; i++) {
         this->ARESTAS->add(no, i, 0);

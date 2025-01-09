@@ -11,6 +11,8 @@ using namespace std;
 
 class Grafo {
 public:
+    static int RandomNumber(int floor, int ceil);
+
     Grafo();
 
     virtual ~Grafo();
@@ -58,11 +60,27 @@ public:
 
     virtual void addAresta(Node *origem, Node *destino, int peso);
 
+    void removeAresta(Node *origem, Node *destino);
+
+    void restaurarAresta(Node *origem, Node *destino, int peso);
+
     void salvaDescricao();
 
     virtual void salvaGrafos();
 
     virtual void removeVertice(int no);
+
+    void generateRandomGraph();
+
+    bool existeAresta(Node *nodeA, Node *nodeB);
+
+    bool ehPonte(Node *nodeA, Node *nodeB);
+
+    bool ehArticulacao(Node *nodeA);
+
+    bool verificaConexidade();
+
+    void auxGeraArvore( int no, vector<bool> *visitados, int &auxGrau, vector<int>* vizinhos);
 
 private:
     virtual vector<int> getVizinhos(int no) { return {}; }

@@ -2,12 +2,16 @@
 #include <algorithm>
 #include <sstream>
 #include <string>
+#include <cstdlib>
 
 #include "../../../include/structures/graph/Grafo.h"
 #include "../storage/List/List.cpp"
 
-class Node;
 using namespace std;
+
+int Grafo::RandomNumber(int floor, int ceil) {
+    return rand() % ceil + floor;
+}
 
 Grafo::Grafo() : Input(nullptr), Output(nullptr), ArestaPonderada(false), VerticePonderado(false),
                  Direcionado(false), completo(false),
@@ -117,7 +121,7 @@ int Grafo::get_ordem() const {
 }
 
 int Grafo::get_grau() const {
-        return this->Grau;
+    return this->Grau;
 }
 
 bool Grafo::eh_direcionado() const {
@@ -281,6 +285,12 @@ void Grafo::set_direcionado(const bool direcionado) {
 void Grafo::addAresta(Node *origem, Node *destino, int peso) {
 }
 
+void Grafo::removeAresta(Node *origem, Node *destino) {
+}
+
+void Grafo::restaurarAresta(Node *origem, Node *destino, int peso) {
+}
+
 void Grafo::salvaDescricao() {
     *this->Output << this->get_grau() << endl;
     *this->Output << this->get_ordem() << endl;
@@ -362,12 +372,224 @@ void Grafo::novo_grafo(ifstream *entrada, ofstream *saida) {
     this->Output = saida;
     string line;
 
-    int i = 0;
+    const auto grafoProperties = new vector<int>();
 
-    while (getline(*this->Input, line) && !this->Input->eof()) {
+    while (getline(*this->Input, line)) {
         istringstream iss(line);
 
-        // iss >>
-        i++;
+        int value;
+        iss >> value;
+
+        grafoProperties->push_back(value);
+    }
+
+    this->Grau = grafoProperties->at(0);
+    this->Ordem = grafoProperties->at(1);
+    this->set_direcionado(grafoProperties->at(2));
+    this->componentesConexas = grafoProperties->at(3);
+    this->set_vertice_ponderado(grafoProperties->at(4));
+    this->set_aresta_ponderada(grafoProperties->at(5));
+    this->completo = grafoProperties->at(6);
+    this->bipartido = grafoProperties->at(7);
+    this->arvore = grafoProperties->at(8);
+    this->arestaPonte = grafoProperties->at(9);
+    this->verticeArticulacao = grafoProperties->at(10);
+
+    this->generateRandomGraph();
+
+    delete grafoProperties;
+}
+
+void Grafo::generateRandomGraph() {
+    for (int i = 1; i <= this->Ordem; i++) {
+        if (this->VerticePonderado)
+            this->NOS->add(new Node(i, RandomNumber(1, 10)));
+        else
+            this->NOS->add(new Node(i, 0));
+    }
+
+    int numArestas = 0;
+    const int maxArestas = this->Grau;
+
+    if (this->bipartido && numArestas < maxArestas) {
+        vector<int> setA, setB;
+        for (int i = 1; i <= this->Ordem; i++) {
+            if (RandomNumber(0, 1) == 0)
+                setA.push_back(i);
+            else
+                setB.push_back(i);
+        }
+        for (auto a: setA) {
+            for (auto b: setB) {
+                if (numArestas < maxArestas) {
+                    auto nodeA = this->NOS->get(a);
+                    auto nodeB = this->NOS->get(b);
+                    auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+                    this->addAresta(nodeA, nodeB, peso);
+                    numArestas++;
+                }
+            }
+        }
+    }
+
+    if (this->arvore && numArestas < maxArestas) {
+        vector<bool> visitados(this->Ordem + 1, false);
+        vector<int> viz;
+        int auxGrau = 0;
+        this->auxGeraArvore(1, &visitados, auxGrau, &viz);
+        numArestas += auxGrau;
+    }
+
+    if (this->completo && !this->bipartido && !this->arvore && numArestas < maxArestas) {
+        for (int i = 1; i <= this->Ordem; i++) {
+            for (int j = i + 1; j <= this->Ordem; j++) {
+                if (numArestas < maxArestas) {
+                    auto nodeA = this->NOS->get(i);
+                    auto nodeB = this->NOS->get(j);
+                    auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+                    this->addAresta(nodeA, nodeB, peso);
+                    if (!this->Direcionado) {
+                        this->addAresta(nodeB, nodeA, peso);
+                    }
+                    numArestas++;
+                }
+            }
+        }
+    }
+
+    if (this->componentesConexas > 1 && numArestas < maxArestas) {
+        vector<int> representantes;
+        auto visitados = vector<bool>(this->Ordem + 1, false);
+
+        for (int i = 1; i <= this->Ordem; i++) {
+            if (!visitados[i]) {
+                auto componente = this->fechoTransitivoDireto(i);
+                for (auto no: *componente) {
+                    visitados[no] = true;
+                }
+                representantes.push_back(i);
+                delete componente;
+            }
+        }
+
+        for (size_t i = 1; i < representantes.size(); i++) {
+            if (numArestas < maxArestas) {
+                auto nodeA = this->NOS->get(representantes[i - 1]);
+                auto nodeB = this->NOS->get(representantes[i]);
+                auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+                this->addAresta(nodeA, nodeB, peso);
+                numArestas++;
+            }
+        }
+    }
+
+    if (this->possui_ponte() && numArestas < maxArestas) {
+        int u = RandomNumber(1, this->Ordem);
+        int v = RandomNumber(1, this->Ordem);
+        while (u == v) {
+            v = RandomNumber(1, this->Ordem);
+        }
+        auto nodeU = this->NOS->get(u);
+        auto nodeV = this->NOS->get(v);
+        auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+        this->addAresta(nodeU, nodeV, peso);
+        numArestas++;
+    }
+
+    if (this->possui_articulacao() && numArestas < maxArestas) {
+        int pivot = RandomNumber(1, this->Ordem);
+        for (int i = 1; i <= this->Ordem; i++) {
+            if (i != pivot && numArestas < maxArestas) {
+                auto nodeA = this->NOS->get(pivot);
+                auto nodeB = this->NOS->get(i);
+                auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+                this->addAresta(nodeA, nodeB, peso);
+                numArestas++;
+                break;
+            }
+        }
+    }
+
+    while (numArestas < maxArestas) {
+        int i = RandomNumber(1, this->Ordem);
+        int j = RandomNumber(1, this->Ordem);
+
+        if (i != j) {
+            auto nodeA = this->NOS->get(i);
+            auto nodeB = this->NOS->get(j);
+
+            if (!this->existeAresta(nodeA, nodeB)) {
+                auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+
+                this->addAresta(nodeA, nodeB, peso);
+                numArestas++;
+
+                if (this->possui_ponte() && !this->ehPonte(nodeA, nodeB)) {
+                    this->removeAresta(nodeA, nodeB);
+                    numArestas--;
+                } else if (this->possui_articulacao() && !this->ehArticulacao(nodeA)) {
+                    this->removeAresta(nodeA, nodeB);
+                    numArestas--;
+                } else if (this->componentesConexas > 1 && !this->verificaConexidade()) {
+                    this->removeAresta(nodeA, nodeB);
+                    numArestas--;
+                }
+            }
+        }
+    }
+}
+
+bool Grafo::existeAresta(Node *nodeA, Node *nodeB) {
+    const auto vizinhos = this->getVizinhos(nodeA->getId());
+    return find(vizinhos.begin(), vizinhos.end(), nodeB->getId()) != vizinhos.end();
+}
+
+bool Grafo::ehPonte(Node *nodeA, Node *nodeB) {
+    this->removeAresta(nodeA, nodeB);
+    bool conexo = this->verificaConexidade();
+    this->restaurarAresta(nodeA, nodeB, 1); // Assuming the weight is 1 for restoration
+    return !conexo;
+}
+
+bool Grafo::ehArticulacao(Node *nodeA) {
+    auto originalConexidade = this->verificaConexidade();
+    this->removeVertice(nodeA->getId());
+    bool mudouConexidade = this->verificaConexidade() != originalConexidade;
+    // Assuming a method to restore the vertex
+    // You need to implement this method based on your logic
+    // this->restaurarVertice(nodeA->getId());
+    return mudouConexidade;
+}
+
+bool Grafo::verificaConexidade() {
+    return this->n_conexo() == this->componentesConexas;
+}
+
+void Grafo::auxGeraArvore(int no, vector<bool> *visitados, int &auxGrau, vector<int> *vizinhos) {
+    if (auxGrau >= this->Grau)
+        return;
+
+    visitados->at(no) = true;
+
+    while (auxGrau < this->Grau) {
+        vector<int> naoVisitados;
+        for (int i = 1; i <= this->Ordem; i++) {
+            if (!visitados->at(i))
+                naoVisitados.push_back(i);
+        }
+
+        if (naoVisitados.empty())
+            return;
+
+        int novoVizinho = naoVisitados[RandomNumber(0, naoVisitados.size() - 1)];
+        const auto node = this->NOS->get(no);
+        const auto vizinhoNode = this->NOS->get(novoVizinho);
+        const auto peso = this->ArestaPonderada ? RandomNumber(1, 10) : 1;
+
+        this->addAresta(node, vizinhoNode, peso);
+        vizinhos->push_back(novoVizinho);
+        auxGrau++;
+
+        this->auxGeraArvore(novoVizinho, visitados, auxGrau, vizinhos);
     }
 }
