@@ -547,7 +547,7 @@ bool Grafo::existeAresta(Node *nodeA, Node *nodeB) {
 bool Grafo::ehPonte(Node *nodeA, Node *nodeB) {
     this->removeAresta(nodeA, nodeB);
     bool conexo = this->verificaConexidade();
-    this->restaurarAresta(nodeA, nodeB, 1); // Assuming the weight is 1 for restoration
+    this->restaurarAresta(nodeA, nodeB, 1);
     return !conexo;
 }
 
@@ -555,9 +555,6 @@ bool Grafo::ehArticulacao(Node *nodeA) {
     auto originalConexidade = this->verificaConexidade();
     this->removeVertice(nodeA->getId());
     bool mudouConexidade = this->verificaConexidade() != originalConexidade;
-    // Assuming a method to restore the vertex
-    // You need to implement this method based on your logic
-    // this->restaurarVertice(nodeA->getId());
     return mudouConexidade;
 }
 
