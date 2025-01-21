@@ -2,11 +2,12 @@
 #include <iostream>
 #include <string>
 #include <unistd.h>
+#include <climits>
 
 // ReSharper disable once CppUnusedIncludeDirective
 #include "src/structures/graph/Grafo.cpp"
 #include "src/structures/graph/Grafo_lista.cpp"
-#include "src/structures/graph/Grafo_Matriz.cpp"
+#include "src/structures/graph/Grafo_matriz.cpp"
 
 
 using namespace std;
