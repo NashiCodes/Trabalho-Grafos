@@ -10,6 +10,7 @@ class Grafo_matriz final : public Grafo {
     Matrix *ARESTAS;
 
     vector<int> getVizinhos(int no) override ;
+    int getAresta(int origem, int destino) override;
 public:
     Grafo_matriz();
 

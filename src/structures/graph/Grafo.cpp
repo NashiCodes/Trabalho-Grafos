@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <climits>
 
 #include "../../../include/structures/graph/Grafo.h"
 #include "../storage/List/List.cpp"
@@ -292,6 +293,15 @@ void Grafo::restaurarAresta(Node *origem, Node *destino, int peso) {
 }
 
 void Grafo::salvaDescricao() {
+    if (this->NOS->get(1) != nullptr) {
+        *this->Output << "Excluindo nó 1..." << endl;
+        this->removeVertice(1);
+    }
+    if (const auto vizinho = this->getVizinhos(2)[0]; this->NOS->get(vizinho) != nullptr) {
+        *this->Output << "Excluindo primeira aresta do nó 2..." << endl;
+        this->removeAresta(this->NOS->get(2), this->NOS->get(vizinho));
+    }
+
     *this->Output << this->get_grau() << endl;
     *this->Output << this->get_ordem() << endl;
     *this->Output << this->eh_direcionado() << endl;
@@ -303,6 +313,7 @@ void Grafo::salvaDescricao() {
     *this->Output << this->eh_arvore() << endl;
     *this->Output << this->possui_ponte() << endl;
     *this->Output << this->possui_articulacao() << endl;
+    *this->Output << this->getMaiorCaminhoMinimo() << endl;
 }
 
 void Grafo::salvaGrafos() {
@@ -589,4 +600,87 @@ void Grafo::auxGeraArvore(int no, vector<bool> *visitados, int &auxGrau, vector<
 
         this->auxGeraArvore(novoVizinho, visitados, auxGrau, vizinhos);
     }
+}
+
+string Grafo::getMaiorCaminhoMinimo() {
+    const auto dist = this->Floyd();
+    auto maior = 0;
+    auto origem = 0;
+    auto destino = 0;
+
+    for (int i = 0; i < this->Ordem; i++) {
+        for (int j = 0; j < this->Ordem; j++) {
+            if ((*dist)[i][j] > maior && (*dist)[i][j] != INT_MAX/2) {
+                maior = (*dist)[i][j];
+                origem = i + 1;
+                destino = j + 1;
+            }
+        }
+    }
+
+    auto result = "Maior menor distância: (" + to_string(origem) + "," + to_string(destino) + ")" + " = " + to_string(maior);
+
+    delete dist;
+    return result;
+}
+
+void Grafo::floydA0(vector<vector<int> > *dist) {
+    // Inicializa a matriz de distâncias
+    for (int i = 0; i < this->Ordem; i++) {
+        auto linha = vector<int>();
+        for (int j = 0; j < this->Ordem; j++) {
+            if (i == j) {
+                linha.push_back(0);
+            } else {
+                linha.push_back(INT_MAX/2);
+            }
+        }
+        dist->push_back(linha);
+    }
+
+
+    // Preenche a matriz de distâncias com os valores de peso das arestas
+    for (int i = 0; i < this->Ordem; i++) {
+        const auto node = this->NOS->get(i + 1);
+        const auto vizinhos = this->getVizinhos(node->getId());
+        for (const auto &vizinho: vizinhos) {
+            const auto vizinhoNode = this->NOS->get(vizinho);
+            (*dist)[node->getId() - 1][vizinhoNode->getId() - 1] = this->getAresta(node->getId(), vizinhoNode->getId());
+
+            if (!this->eh_direcionado())
+                (*dist)[vizinhoNode->getId() - 1][node->getId() - 1] = this->getAresta(
+                    node->getId(), vizinhoNode->getId());
+        }
+    }
+}
+
+vector<vector<int> > *Grafo::Floyd() {
+    // Inicializa a matriz de distâncias
+    auto *dist = new vector<vector<int> >();
+
+    // Inicializa a matriz de distâncias A0
+    this->floydA0(dist);
+    // Executa o algoritmo de Floyd
+    // Para cada nó k
+    // sendo k o nó intermediário
+    for (int k = 0; k < this->Ordem; k++) {
+        if (const auto noK = this->NOS->get(k + 1); noK != nullptr)
+            for (int i = 0; i < this->Ordem; i++) {
+                if (const auto noI = this->NOS->get(i + 1); noI != nullptr)
+                    for (int j = 0; j < this->Ordem; j++) {
+                        if (const auto noJ = this->NOS->get(j + 1); noJ != nullptr)
+                            if ((*dist)[i][j] > (*dist)[i][k] + (*dist)[k][j]) {
+                                // A distância de i até j passa a ser a distância de i até k + a distância de k até j
+                                (*dist)[i][j] = (*dist)[i][k] + (*dist)[k][j];
+
+                                //Se o grafo não for direcionado, a distância de j até i também passa a ser
+                                // a distância de j até k + a distância de k até i
+                                if (!this->eh_direcionado())
+                                    (*dist)[j][i] = (*dist)[i][k] + (*dist)[k][j];
+                            }
+                    }
+            }
+    }
+
+    return dist;
 }

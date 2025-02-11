@@ -1,11 +1,9 @@
+Excluindo nó 1...
+Excluindo primeira aresta do nó 2...
 5
-7
+6
 0
 2
 0
 0
 0
-1
-0
-1
-1

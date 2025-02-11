@@ -43,12 +43,8 @@ CMakeUserPresets.json
 *.exe
 *.out
 *.app
-/.idea/.gitignore
-/.idea/editor.xml
-/.idea/misc.xml
-/.idea/modules.xml
-/.idea/trabalho.iml
-/.idea/vcs.xml
+.idea/
 /.vscode
 /cmake-build-***/
 build/
+/main

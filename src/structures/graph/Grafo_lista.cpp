@@ -29,7 +29,7 @@ void Grafo_lista::addAresta(Node *origem, Node *destino, const int peso) {
     this->ARESTAS->add(Aresta);
 }
 
-void Grafo_lista::removeAresta(Node *origem, Node *destino) {
+void Grafo_lista::removeAresta(Node *origem, Node *destino) const {
     for (const auto aresta: origem->getArestas()) {
         if (aresta->getDestino() == destino || aresta->getOrigem() == destino) {
             origem->removeAresta(aresta);
@@ -41,7 +41,7 @@ void Grafo_lista::removeAresta(Node *origem, Node *destino) {
     }
 }
 
-void Grafo_lista::restaurarAresta(Node *origem, Node *destino, int peso) {
+void Grafo_lista::restaurarAresta(Node *origem, Node *destino, const int peso) {
     this->addAresta(origem, destino, peso);
 }
 
@@ -113,4 +113,16 @@ vector<int> Grafo_lista::getVizinhos(const int no) {
     }
 
     return vizinhos;
+}
+
+int Grafo_lista::getAresta(const int origem, const int destino) {
+
+    for (const auto aresta: this->NOS->get(origem)->getArestas()) {
+        if (aresta->getDestino()->getId() == destino || aresta->getOrigem()->getId() == destino) {
+            return aresta->getPeso();
+        }
+    }
+
+    return 0;
+    
 }

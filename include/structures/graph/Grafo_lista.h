@@ -12,6 +12,7 @@ class Grafo_lista final : public Grafo {
     List<Edge *> *ARESTAS;
 
     vector<int> getVizinhos(int no) override ;
+    int getAresta(int origem, int destino) override;
 
 public:
     Grafo_lista();
@@ -20,7 +21,7 @@ public:
 
     void addAresta(Node *origem, Node *destino, int peso) override;
 
-    void removeAresta(Node *origem, Node *destino);
+    void removeAresta(Node *origem, Node *destino) const;
 
     void restaurarAresta(Node *origem, Node *destino, int peso);
 

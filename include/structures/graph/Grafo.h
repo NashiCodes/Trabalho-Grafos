@@ -82,8 +82,15 @@ public:
 
     void auxGeraArvore( int no, vector<bool> *visitados, int &auxGrau, vector<int>* vizinhos);
 
+    string getMaiorCaminhoMinimo();
+
+    void floydA0(vector<vector<int>> * dist);
+
+    vector<vector<int>>* Floyd();
+
 private:
     virtual vector<int> getVizinhos(int no) { return {}; }
+    virtual int getAresta(int origem, int destino) { return 0; }
 
 protected:
     ifstream *Input;

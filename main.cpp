@@ -20,8 +20,6 @@ ofstream saida;
 
 string *getCurrentDirName();
 
-bool ehCmakeDir(const string *path);
-
 void abreAquivos();
 
 void abreInput();
@@ -78,14 +76,17 @@ string *getCurrentDirName() {
     return new string(buffer);
 }
 
-bool ehCmakeDir(const string *path) {
-    return path->find("cmake-build-debug") != string::npos ||
-           path->find("cmake-build-release") != string::npos;
-}
-
 void abreAquivos() {
-    abreInput();
-    abreOutput();
+    const auto path = getCurrentDirName();
+
+    path->append("/input/").append(input);
+    entrada.open(*path, ios::in);
+
+    path->erase(path->find("input"), path->length());
+    path->append("output/").append(out);
+    saida.open(*path, ios::out | ios::trunc);
+
+    delete path;
 
     if (!entrada.is_open() || !saida.is_open()) {
         cout << "Erro ao abrir os arquivos!" << endl;
@@ -93,30 +94,4 @@ void abreAquivos() {
     }
 
     cout << "arquivos aberto" << endl;
-}
-
-void abreInput() {
-    const auto path = getCurrentDirName();
-
-    if (ehCmakeDir(path)) {
-        path->erase(path->find("cmake-build-debug"), path->length());
-    }
-
-    path->append("/input/").append(input);
-    entrada.open(*path, ios::in);
-
-    delete path;
-}
-
-void abreOutput() {
-    const auto path = getCurrentDirName();
-
-    if (ehCmakeDir(path)) {
-        path->erase(path->find("cmake-build-debug"), path->length());
-    }
-
-    path->append("/output/").append(out);
-    saida.open(*path, ios::out | ios::trunc);
-
-    delete path;
 }

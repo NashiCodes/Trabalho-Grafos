@@ -25,6 +25,10 @@ vector<int> Grafo_matriz::getVizinhos(const int no) {
     return vizinhos;
 }
 
+int Grafo_matriz::getAresta(int origem, int destino) {
+    return this->ARESTAS->get(origem, destino); 
+}
+
 void Grafo_matriz::set_direcionado(const bool direcionado) {
     this->Direcionado = direcionado;
 
